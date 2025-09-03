@@ -1,0 +1,26 @@
+{
+  "name": "copy-drawing-style",
+  "version": "1.0.0",
+  "description": "AI-powered drawing style analysis tool",
+  "main": "index.html",
+  "scripts": {
+    "dev": "wrangler pages dev . --compatibility-date=2024-01-15",
+    "deploy": "wrangler pages deploy ."
+  },
+  "keywords": [
+    "ai",
+    "drawing",
+    "style",
+    "analysis",
+    "art",
+    "cloudflare"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

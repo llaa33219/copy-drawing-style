@@ -1,0 +1,28 @@
+# Global headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-XSS-Protection: 1; mode=block
+
+# API headers
+/api/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization
+  Access-Control-Max-Age: 86400
+
+# Cache static assets
+*.css
+  Cache-Control: public, max-age=31536000
+
+*.js
+  Cache-Control: public, max-age=31536000
+
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+  Cache-Control: public, max-age=31536000
