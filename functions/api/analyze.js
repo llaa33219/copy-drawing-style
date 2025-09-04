@@ -18,86 +18,116 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        // 개별 이미지 분석을 위한 전문적인 영어 프롬프트
-        const individualAnalysisPrompt = `Analyze this artwork/illustration with extreme precision to create an AI-art-generation-ready style analysis. Focus on elements that directly translate to effective prompts:
+        // AI 아트 생성 최적화된 개별 이미지 스타일 분석 프롬프트
+        const individualAnalysisPrompt = `You are an expert AI art prompt engineer analyzing this artwork for style replication in Stable Diffusion, Midjourney, and similar AI art generation tools. Extract ONLY the visual style characteristics that can be effectively reproduced by AI models.
 
-**LINE ART TECHNICAL ANALYSIS:**
-- Line weight control: uniform thickness, variable line weight, or pressure-sensitive strokes
-- Line quality descriptors: clean vector lines, hand-drawn sketchy lines, precise digital lines, organic brush strokes
-- Line termination: sharp endings, rounded caps, tapered brush ends, or rough sketch marks
-- Outline treatment: thick black outlines (cel-shading style), thin precise lines, no outlines (painterly), or colored outlines
-- Line confidence: confident single strokes vs tentative multiple strokes vs constructed geometric lines
+**CRITICAL ANALYSIS FOCUS:**
+Analyze this artwork using AI-art-generation terminology that models recognize and respond to effectively:
 
-**RENDERING STYLE CLASSIFICATION:**
-- Primary technique: flat cel-shading, soft painting style, hard-edge vector art, traditional media simulation, or hybrid approach
-- Shading method: cell/toon shading with distinct color zones, gradient painting with soft transitions, or realistic light rendering
-- Color application: solid flat colors, gradient fills, textured brush painting, airbrush effects, or watercolor bleeding
-- Detail level: minimalist/simplified, moderate detail, or highly detailed/realistic approach
+**LINE ART TECHNICAL SPECS:**
+- Line weight control: "uniform line weight" | "variable line thickness" | "pressure-sensitive strokes" | "bold outlines (2-3px)" | "thin precise lines (0.5-1px)" | "no outlines"
+- Line quality: "clean vector lines" | "hand-drawn sketchy lines" | "precise digital lines" | "organic brush strokes" | "rough sketch marks"
+- Line treatment: "black outlines" | "colored outlines" | "soft line edges" | "sharp vector edges" | "painterly no-lines"
 
-**COLOR PALETTE AND THEORY:**
-- Palette type: monochromatic, analogous, complementary, triadic, or rainbow spectrum
-- Saturation level: desaturated/muted tones, medium saturation, or highly saturated/vibrant colors
-- Value contrast: high contrast with deep shadows, medium contrast, or low contrast/flat lighting
-- Color temperature: warm-biased, cool-biased, or balanced temperature palette
-- Special color effects: neon/glowing colors, pastel softness, earth tones, or metallic/iridescent effects
+**RENDERING CLASSIFICATION:**
+- Primary technique: "flat cel shading" | "soft gradient painting" | "hard-edge vector art" | "traditional media simulation" | "photo-realistic rendering"
+- Shading method: "toon shading with sharp shadows" | "soft airbrushed gradients" | "realistic volumetric lighting" | "flat ambient lighting"
+- Color application: "solid flat colors" | "smooth gradients" | "textured brush strokes" | "watercolor bleeding" | "digital paint effects"
 
-**LIGHTING AND DIMENSIONAL RENDERING:**
-- Light source type: single directional light, multiple light sources, ambient flat lighting, or dramatic rim lighting
-- Shadow characteristics: hard-edged shadows, soft gradient shadows, cast shadows present/absent, or stylized shadow shapes
-- Highlight treatment: sharp specular highlights, soft diffuse highlights, rim light effects, or no highlights (flat style)
-- Subsurface effects: skin translucency, fabric light transmission, or solid opaque rendering
-- Atmospheric effects: depth haze, light rays, particle effects, or clear/flat atmosphere
+**COLOR PALETTE ANALYSIS:**
+- Palette type: "monochromatic scheme" | "warm color harmony" | "cool color harmony" | "complementary contrast" | "triadic colors" | "vibrant rainbow"
+- Saturation: "desaturated muted tones" | "medium saturation" | "highly saturated vibrant" | "pastel soft colors" | "neon bright colors"
+- Value contrast: "high contrast dramatic" | "medium contrast balanced" | "low contrast flat" | "soft atmospheric"
+- Color temperature: "warm golden tones" | "cool blue tones" | "balanced neutral tones" | "split warm/cool lighting"
 
-**CHARACTER DESIGN PROPORTIONS:**
-- Head-to-body ratio: realistic 7-8 heads, stylized 6-7 heads, or exaggerated 4-5 heads (chibi/cute style)
-- Facial feature proportions: large eyes (anime style), realistic proportions, or stylized/caricature features  
-- Body type rendering: anatomically accurate, stylized/idealized, or simplified/geometric shapes
-- Age representation: child-like features, teenager proportions, adult anatomy, or elderly characteristics
+**LIGHTING SYSTEM:**
+- Light setup: "single key light" | "three-point lighting" | "ambient flat lighting" | "dramatic rim lighting" | "natural outdoor lighting" | "studio lighting setup"
+- Shadow type: "sharp cel-shaded shadows" | "soft gradient shadows" | "realistic cast shadows" | "stylized shape shadows" | "minimal shadow"
+- Highlight treatment: "sharp specular highlights" | "soft diffuse highlights" | "rim light glow" | "no highlights flat"
 
-**TEXTURE AND SURFACE QUALITY:**
-- Skin rendering: smooth/polished, soft/painted, textured/realistic, or simplified flat
-- Hair technique: individual strand detail, chunky/grouped sections, flat color shapes, or painterly masses
-- Fabric representation: detailed folds and creases, simplified geometric folds, or flat graphic shapes
-- Material indication: glossy/reflective surfaces, matte/diffuse materials, or stylized material representation
+**PROPORTIONS & ANATOMY:**
+- Figure ratio: "realistic 7-8 heads tall" | "stylized 6 heads tall" | "chibi 4 heads tall" | "elongated fashion 9 heads"  
+- Facial features: "large anime eyes" | "realistic proportions" | "simplified cartoon" | "exaggerated caricature"
+- Body type: "anatomically correct" | "stylized idealized" | "simplified geometric" | "chibi proportions"
 
-**STYLISTIC GENRE IDENTIFICATION:**
-- Cultural style markers: Western cartoon/animation, Japanese anime/manga, Korean manhwa, European comic, or traditional art influence
-- Era/movement influence: modern digital art, 90s anime style, retro poster art, classical painting techniques, or contemporary illustration trends
-- Medium simulation: digital painting, traditional watercolor, oil painting, pencil sketch, or vector graphics appearance
+**TEXTURE & SURFACE QUALITY:**
+- Skin rendering: "smooth cel-shaded skin" | "soft painted skin" | "realistic skin texture" | "flat matte skin"
+- Hair technique: "chunky anime hair" | "detailed hair strands" | "simplified hair shapes" | "painterly hair masses"
+- Fabric treatment: "sharp clothing folds" | "soft fabric draping" | "flat graphic shapes" | "detailed textile texture"
 
-Provide specific, actionable style descriptors that would work effectively in AI art generation prompts. Use precise technical terminology that AI models recognize for style control.`;
+**STYLISTIC CLASSIFICATION:**
+- Cultural influence: "Japanese anime style" | "Western cartoon style" | "Korean manhwa style" | "European comic art" | "American animation"
+- Era markers: "90s anime aesthetic" | "modern digital art" | "retro vintage poster" | "contemporary illustration"
+- Medium simulation: "digital painting" | "traditional watercolor" | "oil painting texture" | "pencil sketch" | "vector graphics"
 
-        // 종합 분석을 위한 AI 아트 생성 최적화 프롬프트
-        const synthesisPrompt = `You are an expert AI art prompt engineer. Based on the following individual style analyses, create the most effective and precise prompt for AI image generation tools (Stable Diffusion, Midjourney, etc.) that will reproduce this exact art style.
+**AI GENERATION TAGS:**
+Extract the most effective style tags for AI art generation:
+- Primary style keywords (maximum 5 most defining terms)
+- Supporting technique modifiers
+- Quality enhancement tags
+- Specific artistic movement or influence
+- Technical rendering specifications
 
-**SYNTHESIS REQUIREMENTS:**
-1. Identify the most consistent and defining style elements across all analyses
-2. Translate technical art terms into AI-prompt-friendly keywords that models recognize
+PROVIDE ANALYSIS IN THIS FORMAT:
+**PRIMARY STYLE:** [Main classification]
+**LINE ART:** [Technical specifications]  
+**COLORING:** [Method and palette]
+**LIGHTING:** [Setup and treatment]
+**PROPORTIONS:** [Figure and facial ratios]
+**TEXTURE:** [Surface treatments]
+**INFLUENCES:** [Cultural/temporal markers]
+**AI TAGS:** [Optimized generation keywords]
+
+Use only terminology that AI art models have strong training associations with.`;
+
+        // AI 아트 생성 도구 최적화된 통합 프롬프트 생성
+        const synthesisPrompt = `You are a master AI art prompt engineer. Based on the following individual style analyses, create the MOST EFFECTIVE prompt for AI art generation tools (Stable Diffusion, Midjourney, DALL-E) that will consistently reproduce this exact art style.
+
+**SYNTHESIS MISSION:**
+1. Identify the STRONGEST recurring style elements across all analyses
+2. Convert technical art terms into AI-prompt-optimized keywords that models recognize
 3. Structure the prompt for maximum effectiveness with modern AI art generators
-4. Include both positive descriptors and implied negative space (what to avoid)
-5. Balance specificity with flexibility for different subjects
+4. Provide weighted suggestions and negative prompts
+5. Create alternative phrasings for testing variations
 
-**OUTPUT FORMAT:**
-Create a production-ready prompt in this optimized structure:
+**REQUIRED OUTPUT FORMAT:**
 
-**MAIN STYLE PROMPT:**
-"[Primary art medium/technique], [line art style], [coloring method], [lighting approach], [character proportions], [detail level], [cultural/genre influence], [color palette], [special visual effects], [overall mood/atmosphere]"
+**MASTER PROMPT:**
+Create the main generation prompt in this proven effective structure:
+"[Primary medium/technique] (1.3), [specific line art style] (1.2), [color palette + rendering method] (1.1), [lighting approach], [character proportions], [cultural/genre influence], [detail level], masterpiece, best quality, high resolution"
 
-**TECHNICAL MODIFIERS:**
-- Aspect ratio recommendations
-- Suggested CFG scale range
-- Key negative prompts to avoid unwanted elements
-- Additional style-specific keywords for fine-tuning
+**STYLE BREAKDOWN:**
+- **Core Style Tags:** [5 most critical keywords that define this style]
+- **Line Art:** [Specific line treatment keywords]
+- **Coloring:** [Palette and rendering technique]  
+- **Lighting:** [Light setup and shadow type]
+- **Anatomy:** [Proportion and feature specifications]
+- **Cultural Context:** [Genre/origin markers]
+- **Quality Enhancers:** [Technical improvement tags]
 
-**WEIGHT SUGGESTIONS:**
-- Which elements should be emphasized with increased weights (1.2-1.4)
-- Which elements might need de-emphasis (0.8-0.9)
+**NEGATIVE PROMPT:**
+"[elements to avoid], low quality, blurry, distorted anatomy, bad proportions, worst quality, low resolution, pixelated, artifacts"
 
-**ALTERNATIVE PHRASINGS:**
-- 2-3 alternative ways to describe the core style for testing variations
-- Style-specific keywords that work well with this particular art approach
+**WEIGHT RECOMMENDATIONS:**
+- Primary style elements: (1.2-1.4)  
+- Supporting details: (1.0-1.1)
+- Elements to reduce: (0.8-0.9)
 
-Focus on creating a prompt that will consistently generate images in the analyzed style across different subjects and compositions. Use terminology that AI models have strong associations with in their training data.
+**ALTERNATIVE VARIATIONS:**
+Provide 3 alternative main prompt variations for testing:
+1. **Detailed Version:** [More descriptive terms]
+2. **Simplified Version:** [Core essentials only]  
+3. **Enhanced Version:** [With additional quality modifiers]
+
+**TECHNICAL PARAMETERS:**
+- Recommended CFG Scale: [7-15 range]
+- Suggested Steps: [20-50 range]  
+- Best Sampling Method: [DPM++ 2M Karras | Euler a | DDIM]
+
+**LORA/EMBEDDING SUGGESTIONS:**
+If applicable, suggest relevant LoRA models or textual inversions that would enhance this style.
+
+Focus on creating prompts that will work consistently across different subjects while maintaining the analyzed style characteristics. Use only terminology with strong AI model training associations.
 
 Individual style analyses:`;
 

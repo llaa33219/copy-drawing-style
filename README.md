@@ -1,22 +1,57 @@
 # Copy Drawing Style
 
-AI를 활용한 그림 스타일 완전 분석 도구입니다. 이미지를 업로드하면 상세한 스타일 분석을 통해 동일한 스타일의 그림을 그릴 수 있는 프롬프트를 생성합니다.
+**AI 아트 생성 도구 최적화된 전문 그림 스타일 분석 시스템**
 
-## 기능
+이미지를 업로드하면 AI가 전문적으로 분석하여 **Stable Diffusion, Midjourney, DALL-E** 등에서 즉시 사용 가능한 최적화된 프롬프트를 생성합니다.
 
-- 이미지 드래그 앤 드롭 업로드 (최대 20개)
-- 개별 이미지 정밀 분석 후 종합 분석
-- **AI 아트 생성 최적화된** 전문 스타일 분석
-- **실제 사용 가능한** 프롬프트 생성 (Stable Diffusion, Midjourney 등)
-- 가중치 및 네거티브 프롬프트 추천
-- 개별 분석 결과 상세 보기
-- 원클릭 클립보드 복사
+## 🎯 핵심 기능
 
-## 기술 스택
+### ✨ AI 아트 생성 특화 분석
+- **개별 이미지 분석**: 각 이미지를 독립적으로 전문 분석
+- **통합 스타일 합성**: 여러 이미지의 공통 스타일 요소 추출
+- **AI 모델 최적화**: Stable Diffusion 등에 최적화된 키워드 생성
+
+### 🛠️ 전문적인 결과 제공
+- **마스터 프롬프트**: 바로 사용 가능한 메인 생성 프롬프트
+- **네거티브 프롬프트**: 원하지 않는 요소 제거용
+- **기술적 매개변수**: CFG Scale, Steps, Sampling 방법 추천
+- **가중치 최적화**: 스타일 요소별 가중치 제안
+
+### 💡 사용자 경험 
+- 최대 20개 이미지 동시 업로드
+- 직관적인 탭 기반 결과 표시
+- 원클릭 프롬프트 복사
+- 실시간 분석 진행 상황 표시
+
+## 🎨 분석 기술 스팩
+
+**LINE ART 기술 분석:**
+- Line weight control, pressure patterns, edge treatment
+- Vector vs hand-drawn vs digital line classification
+
+**RENDERING 분류:**  
+- Cel-shading, gradient painting, vector art identification
+- Color palette harmony and saturation analysis
+
+**LIGHTING 시스템:**
+- Key light, rim lighting, shadow type detection  
+- Atmospheric and volumetric lighting analysis
+
+**PROPORTIONS & ANATOMY:**
+- Figure ratios (realistic vs stylized vs chibi)
+- Facial feature analysis and deformation levels
+
+**STYLISTIC 분류:**
+- Cultural influences (anime, western, manhwa)
+- Era markers (90s, modern, retro)
+- Medium simulation detection
+
+## 🚀 기술 스택
 
 - **프론트엔드**: HTML5, CSS3, Vanilla JavaScript
-- **백엔드**: Cloudflare Pages Functions (Workers)
-- **AI API**: Alibaba Cloud DashScope (Qwen-VL-Max)
+- **백엔드**: Cloudflare Pages Functions (Workers)  
+- **AI 엔진**: Alibaba Cloud DashScope (Qwen-VL-Max-Latest)
+- **최대 토큰**: 32,768 (초장문 분석 지원)
 
 ## 배포 가이드
 
@@ -82,35 +117,15 @@ DASHSCOPE_API_KEY=your-dashscope-api-key-here
 3. "스타일 분석 시작" 버튼 클릭
 4. 분석 완료 후 생성된 프롬프트를 복사하여 사용
 
-## 🎨 전문 분석 요소
+## 분석 요소
 
-### **LINE ART TECHNICAL ANALYSIS**
-- 선 굵기 제어 (uniform/variable/pressure-sensitive)
-- 선 품질 (vector/sketchy/digital/organic brush)
-- 윤곽선 처리 (thick outlines/thin/no outlines/colored outlines)
-
-### **RENDERING STYLE CLASSIFICATION** 
-- 주요 기법 (cel-shading/painting/vector/traditional media simulation)
-- 셰이딩 방법 (toon shading/gradient/realistic lighting)
-- 색상 적용 (flat colors/gradients/textured brushing)
-
-### **COLOR PALETTE AND THEORY**
-- 팔레트 타입 (monochromatic/complementary/triadic)
-- 채도 수준 (desaturated/medium/highly saturated)
-- 색온도 (warm/cool/balanced)
-
-### **LIGHTING AND DIMENSIONAL RENDERING**
-- 광원 타입 (single/multiple/ambient/rim lighting)
-- 하이라이트 처리 (sharp specular/soft/rim light/flat)
-- 대기 효과 (depth haze/light rays/particles)
-
-### **CHARACTER DESIGN PROPORTIONS**
-- 두신비 (realistic 7-8/stylized 6-7/chibi 4-5)
-- 얼굴 특징 (large eyes/realistic/caricature)
-
-### **STYLISTIC GENRE IDENTIFICATION**
-- 문화적 스타일 (Western cartoon/anime/manhwa/European comic)
-- 시대/운동 영향 (modern digital/90s anime/retro/classical)
+- **선화**: 선의 굵기, 강약, 펜 압력, 끝처리 방식
+- **형태와 비율**: 인체 비율, 얼굴 특징, 데포르메 정도
+- **렌더링**: 셀 셰이딩, 색상 팔레트, 그라데이션
+- **음영**: 광원 설정, 그림자 처리, 반사광
+- **질감**: 머리카락, 옷감, 피부 표현
+- **스타일 시그니처**: 눈, 코, 입, 배경 처리
+- **기술적 세부사항**: 브러시, 블렌딩, 후처리 효과
 
 ## 라이선스
 
