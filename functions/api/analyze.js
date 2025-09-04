@@ -48,35 +48,19 @@ What existing art styles does this most resemble? (anime, cartoon, realistic, pa
 Focus purely on visual characteristics that would allow someone to replicate this exact drawing style. Avoid emotional, philosophical, or narrative descriptions.`;
 
         // 그림체 복사를 위한 종합 분석 프롬프트
-        const synthesisPrompt = `You are creating a style replication prompt for AI image generation. Based on the visual style analyses below, create a precise description that focuses ONLY on how to recreate this exact drawing style visually.
+        const synthesisPrompt = `You are creating a unified style replication prompt for AI image generation. Based on the visual style analyses below, synthesize all information into ONE complete, natural-flowing paragraph that tells an AI exactly how to draw in this style.
 
-**OBJECTIVE:**
-Create a natural language prompt that tells an AI exactly how to draw in this style. Focus on visual reproduction, not artistic meaning or emotions.
+**REQUIREMENTS:**
+- Create a single, comprehensive paragraph (150-250 words)
+- Include all technical details in natural language flow
+- Cover: line art, coloring method, shading, proportions, details, palette, texture
+- Use specific, actionable instructions
+- Write as one continuous description, not separate sections
+- Focus purely on visual replication techniques
+- Avoid emotional or artistic interpretation language
 
 **OUTPUT FORMAT:**
-
-**DRAWING STYLE PROMPT:**
-Write a clear, detailed paragraph (100-200 words) describing exactly how to replicate this visual style. Include:
-
-- Line art technique and characteristics
-- Coloring and shading method
-- Proportional and anatomical approach  
-- Detail rendering style
-- Color palette and usage
-- Visual texture and finish
-- Overall technical approach
-
-**STYLE SPECIFICATIONS:**
-Provide specific technical details:
-- "Draw with [line style] using [thickness/texture]"
-- "Color using [technique] with [palette type]"
-- "Render shadows as [description]"
-- "Proportions should be [specific ratios/style]"
-
-**REFERENCE CLASSIFICATION:**
-Identify the closest existing style category (anime, cartoon, realistic painting, etc.)
-
-Focus purely on visual replication instructions. Avoid emotional, atmospheric, or philosophical descriptions. The goal is functional style copying, not artistic interpretation.
+Write only the final unified prompt as a single paragraph, starting directly with the style description. Do not use headings, sections, or bullet points. Make it flow naturally as one complete instruction that can be directly used in AI art generation tools.
 
 Individual style analyses:`;
 
