@@ -48,6 +48,7 @@ h1 {
     transition: all 0.3s ease;
     background: white;
     margin-bottom: 1.5rem;
+    position: relative;
 }
 
 .upload-zone:hover {
@@ -87,6 +88,24 @@ h1 {
 .upload-content p {
     color: #7f8c8d;
     font-size: 0.95rem;
+}
+
+.image-counter {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: #3498db;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.image-counter span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .select-button {

@@ -65,20 +65,34 @@ class DrawingStyleAnalyzer {
     }
 
     addFiles(files) {
+        // 20개 제한 체크
+        let availableSlots = 20 - this.selectedFiles.length;
+        let filesToAdd = [];
+        
         files.forEach(file => {
-            if (!this.selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
-                this.selectedFiles.push(file);
+            if (availableSlots > 0 && !this.selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
+                filesToAdd.push(file);
+                availableSlots--;
             }
         });
         
+        this.selectedFiles.push(...filesToAdd);
+        
+        // 20개 초과 시 경고 표시
+        if (files.length > filesToAdd.length) {
+            this.showError(`최대 20개 이미지까지만 업로드할 수 있습니다. ${filesToAdd.length}개의 이미지가 추가되었습니다.`);
+        }
+        
         this.updatePreview();
         this.updateAnalyzeButton();
+        this.updateImageCounter();
     }
 
     removeFile(index) {
         this.selectedFiles.splice(index, 1);
         this.updatePreview();
         this.updateAnalyzeButton();
+        this.updateImageCounter();
     }
 
     updatePreview() {
@@ -101,6 +115,21 @@ class DrawingStyleAnalyzer {
 
     updateAnalyzeButton() {
         this.analyzeButton.disabled = this.selectedFiles.length === 0;
+    }
+
+    updateImageCounter() {
+        // 이미지 카운터 업데이트 (업로드 존에 카운터 표시)
+        const existingCounter = document.querySelector('.image-counter');
+        if (existingCounter) {
+            existingCounter.remove();
+        }
+        
+        if (this.selectedFiles.length > 0) {
+            const counter = document.createElement('div');
+            counter.className = 'image-counter';
+            counter.innerHTML = `<span>선택된 이미지: ${this.selectedFiles.length}/20</span>`;
+            this.uploadZone.appendChild(counter);
+        }
     }
 
     async analyzeImages() {
