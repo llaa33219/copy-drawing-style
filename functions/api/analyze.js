@@ -18,91 +18,65 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        // 순수 Drawing Style 기법 추출 프롬프트  
-        const individualAnalysisPrompt = `You are analyzing ONLY the drawing technique and style, NOT the character or content. Ignore what is drawn and focus entirely on HOW it's drawn. Extract pure visual technique characteristics.
+        // 극정밀 Drawing Style 복사 분석 시스템  
+        const individualAnalysisPrompt = `You are a master drawing style analyst creating an EXACT visual blueprint for perfect style replication. Act like a forensic art analyst examining every microscopic detail.
 
-**CRITICAL: ANALYZE TECHNIQUE AND STYLE FEEL**
-- Focus on drawing method and visual technique
-- Include character expression style and emotional rendering approach
-- Describe HOW lines are drawn and their stylistic feel
-- Analyze HOW colors create mood and atmosphere  
-- Study proportional systems and their stylistic impact
-- Avoid specific content details but include style characteristics
+**MISSION: PERFECT STYLE REPLICATION**
+- Analyze like you're creating a technical manual for exact reproduction
+- Include every visible technique that makes this style unique
+- Focus on measurable, observable, replicable characteristics
+- Treat this like reverse-engineering a drawing technique
+- Be so specific that someone could recreate the EXACT same visual result`;
 
-**LINE ART TECHNIQUE ANALYSIS:**
-- Line weight behavior: uniform thickness vs variable pressure
-- Line quality: smooth vector lines vs organic brush strokes vs pencil texture
-- Line ending treatment: sharp cuts vs soft tapers vs rounded caps  
-- Outline methodology: thick borders vs thin outlines vs no outlines
-- Line opacity patterns: solid 100% vs semi-transparent effects
-- Line texture approach: clean digital vs textured traditional media simulation
+**ULTRA-PRECISE LINE ART FORENSICS:**
+Examine lines like under a microscope: Exact pixel thickness (1px, 2px, 3px?), line opacity percentage (100%, 80%, variable?), line texture quality (perfectly smooth vector, slightly pixelated, hand-drawn wobble, brush texture grain?). Line pressure behavior: completely uniform thickness or does it vary dynamically? Line ending style: sharp vector cuts, soft brush tapers, rounded caps, rough sketch endings? Outline treatment: thick outer contours (how many pixels thick?), thin consistent outlines, variable weight outlines, or no outlines at all? Line color: pure black, dark brown, colored outlines matching base colors?
 
-**COLORING METHOD ANALYSIS:**
-- Base color application: flat bucket fills vs brush painting vs gradient fills
-- Color transition technique: hard edges vs smooth blending vs stepped gradients
-- Saturation approach: high intensity vs muted tones vs mixed saturation levels
-- Color mixing method: pure flat colors vs subtle color variations vs textured color noise
-- Temperature bias: warm color dominance vs cool color preference vs neutral balance
+**MICROSCOPIC COLORING ANALYSIS:**
+Color application method: Flat bucket-fill solid colors, soft brush painting with subtle variations, airbrush gradients, or textured color application? Edge treatment between colors: razor-sharp hard edges, soft anti-aliased blending, stepped gradient transitions, or rough textured borders? Color saturation intensity: maximum vibrant saturation, muted pastel tones, mixed saturation levels, or desaturated approach? Base color behavior: completely flat uniform colors, subtle color variations within shapes, noisy textured colors, or gradient-filled base colors? Color temperature dominance: warm color bias (reds/oranges/yellows), cool color bias (blues/purples/greens), or neutral balanced temperature?
 
-**SHADING TECHNIQUE ANALYSIS:**  
-- Shadow edge treatment: razor-sharp cell shading vs soft airbrush vs semi-hard gradients
-- Highlight application: pinpoint sharp highlights vs broad soft glows vs no highlights
-- Shadow color method: darker base colors vs colored shadows (purple/blue) vs warm shadows
-- Lighting logic: single directional light vs ambient lighting vs multiple light sources
-- Shadow density: solid opaque vs semi-transparent overlays vs gradient transparency
+**PRECISION SHADING MICROSCOPY:**
+Shadow edge quality: razor-sharp cell-shaded edges (0px blur), soft feathered edges (how many pixels of blur?), semi-hard gradients (specific transition distance), or textured rough edges? Highlight behavior: pinpoint sharp highlights (exact pixel size), broad soft glows (radius measurement), rim lighting effects, or no highlights? Shadow color science: darker versions of base colors, colored shadows (purple/blue/warm orange), multiply blend mode effects, or overlay color mixing? Light source logic: single directional lighting (from which angle?), ambient even lighting, multiple light sources (how many directions?), or dramatic directional lighting?
 
-**PROPORTION SYSTEM ANALYSIS:**
-- Head-to-body measurement system: realistic 8-head vs stylized 6-head vs chibi 3-head proportions
-- Facial feature sizing: large eyes vs small eyes, nose prominence, mouth size relative to face
-- Feature positioning: eye placement height, nose-to-mouth distance, jaw line treatment
-- Body structure approach: realistic anatomy vs stylized simplification vs exaggerated proportions
+**ANATOMICAL PROPORTION SCIENCE:**
+Exact measurement ratios: How many heads tall is the body? (6, 7, 8 heads?) Eye size relative to head width (1/5, 1/4, 1/3 of head width?). Eye positioning: centered on face middle, above center line, or below? Inter-eye distance: one eye width apart, closer, or wider? Nose treatment: detailed realistic rendering, simple line indication, small dot, or absent? Mouth size and positioning: small delicate (what percentage of face width?), full lips, simple line, or dot indication? Jaw shape specifics: sharp angular, soft rounded, square masculine, or pointed feminine? Body proportion style: realistic anatomy ratios, stylized elongation, shortened proportions, or exaggerated features?
 
-**RENDERING TECHNIQUE ANALYSIS:**
-- Detail level consistency: highly detailed vs simplified vs mixed detail levels
-- Texture simulation methods: hair rendering technique, fabric fold treatment, surface quality representation
-- Edge quality standards: clean sharp edges vs soft blurred edges vs textured rough edges
-- Digital tool evidence: vector graphics precision vs raster painting effects vs traditional media simulation
+**MICRO-DETAIL RENDERING FORENSICS:**
+Hair strand organization: Individual detailed strands, chunky grouped sections, flowing ribbon-like masses, or simplified shape blocks? Hair texture simulation: straight smooth surfaces, wavy undulation, curly spiral patterns, or spiky angular shapes? Surface quality evidence: perfectly smooth flat surfaces, subtle texture grain, visible brush strokes, or rough textured finish? Edge detail treatment: clean precise edges, soft slightly blurred edges, rough hand-drawn edges, or textured artistic edges?
 
-**EXPRESSION STYLE ANALYSIS:**
-- Emotional rendering approach: how emotions are conveyed through line work and shading
-- Facial expression methodology: subtle vs exaggerated, realistic vs stylized
-- Character design philosophy: cute/moe vs cool/serious vs dramatic vs playful style
-- Artistic mood creation: warm and friendly vs cool and distant vs dynamic vs calm
-- Style genre characteristics: anime, cartoon, realistic, semi-realistic, chibi, etc.
+**EMOTIONAL EXPRESSION BLUEPRINT:**
+Expression intensity scale: subtle realistic emotions, moderately stylized expressions, highly exaggerated cartoon emotions, or minimal expression approach? Facial expression methodology: detailed realistic muscle movement, simplified symbolic expression, geometric shape-based emotions, or abstract expression approach? Eye expression system: detailed iris/pupil rendering, simple dot eyes, symbolic shape eyes (circles, stars), or complex emotional eye design? Artistic mood creation technique: warm friendly visual temperature, cool distant atmosphere, high energy dynamic feel, or calm peaceful mood?
 
-Focus on replicable drawing techniques AND the artistic style feel. Include expression methods and mood creation techniques.`;
+Describe EVERY visible technique with forensic precision. Act like you're creating a perfect replication manual.`;
 
-        // Drawing Style 지시문 생성 (기법 + 스타일 느낌 포함)
-        const synthesisPrompt = `You are creating a comprehensive drawing style prompt for AI image generation. Based on the technical analyses below, write ONE paragraph that combines drawing techniques with artistic style characteristics.
+        // 마스터급 Drawing Style 복제 지시문 생성기
+        const synthesisPrompt = `You are a master AI art instructor creating the ULTIMATE style replication prompt. Based on the forensic analyses below, synthesize ALL technical details into ONE perfect paragraph that guarantees exact style reproduction.
 
-**BALANCED APPROACH:**
-- Include drawing technique AND artistic style feel
-- Avoid specific character details but include expression style
-- Focus on HOW to achieve the artistic mood and character expression approach
-- Combine technical specifications with stylistic characteristics
+**PERFECTION GOALS:**
+- Create a single paragraph so precise that ANY AI could recreate this EXACT style
+- Include every measurable detail from the analyses
+- Convert technical observations into direct actionable commands
+- Make it read like a master artist's step-by-step technique guide
+- Balance technical precision with artistic style characteristics
 
-**AVOID SPECIFIC CONTENT:**
-- Don't mention: "blonde hair", "red dress", "blue eyes", specific clothing
-- Don't describe: particular characters, specific objects, story elements
+**SYNTHESIS REQUIREMENTS:**
+Transform analysis into commands: "The lines are 2px thick" becomes "Use 2px line thickness"
+Include exact measurements: pixel sizes, opacity percentages, proportion ratios, blur distances
+Specify tool behaviors: vector precision, brush textures, blend modes, edge treatments
+Add style feel: emotional expression approach, mood creation, artistic atmosphere
+Combine all elements: line art + coloring + shading + proportions + details + expression + mood
 
-**INCLUDE STYLE CHARACTERISTICS:**  
-- Expression methodology: "cute/moe style", "serious tone", "playful character expression"
-- Artistic mood: "warm friendly atmosphere", "cool dramatic feel", "soft gentle rendering"
-- Style genre: "anime-style", "cartoon approach", "realistic technique", "chibi methodology"
-- Emotional rendering: "exaggerated expressions", "subtle emotion conveyance", "dramatic facial rendering"
+**MASTER INSTRUCTION FORMAT:**
+Start immediately with drawing commands using imperative mood
+Flow naturally from technique to technique without section breaks
+Include specific numbers, percentages, and measurements throughout
+Mention artistic style characteristics and emotional expression methods
+End with overall artistic mood and style genre classification
+Write 250-350 words of pure technical artistry instruction
 
-**TECHNIQUE + STYLE REQUIREMENTS:**
-- Start with drawing method: "Use... Apply... Render... Draw with..."
-- Include: line art technique, coloring method, shading approach, proportion system
-- Add: artistic style feel, expression methodology, mood creation technique
-- Specify: technical measurements, digital tool behaviors, style characteristics
-- Write as one flowing paragraph combining technique and artistic approach
-- 200-300 words mixing technical drawing instructions with style feel
+**ULTIMATE OUTPUT GOAL:**
+Create the most comprehensive, precise, actionable drawing style instruction ever written. Someone should be able to follow this paragraph and produce visually identical artwork.
 
-**BALANCED OUTPUT:**
-Combine pure drawing techniques with artistic style characteristics. Include both HOW to draw technically and HOW to achieve the artistic style and expression feel.
-
-Individual technical analyses:`;
+Individual forensic analyses:`;
 
         let individualAnalyses = [];
 
