@@ -159,7 +159,7 @@ class DrawingStyleAnalyzer {
             }
 
             const result = await response.json();
-            this.displayResult(result.prompt);
+            this.displayResult(result);
             
         } catch (error) {
             console.error('분석 중 오류:', error);
@@ -178,10 +178,49 @@ class DrawingStyleAnalyzer {
         });
     }
 
-    displayResult(prompt) {
-        this.promptText.textContent = prompt;
+    displayResult(result) {
+        // 결과가 문자열인 경우와 객체인 경우 모두 처리
+        const promptContent = typeof result === 'string' ? result : result.prompt || result;
+        
+        // 프롬프트 내용 표시
+        this.promptText.textContent = promptContent;
+        
+        // 개별 분석 결과가 있다면 추가 정보 표시
+        if (result.individualAnalyses && result.individualAnalyses.length > 0) {
+            this.addIndividualAnalysesDisplay(result.individualAnalyses);
+        }
+        
         this.resultSection.hidden = false;
         this.resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    addIndividualAnalysesDisplay(analyses) {
+        // 기존 개별 분석 결과 제거
+        const existingDetails = document.querySelector('.individual-analyses');
+        if (existingDetails) {
+            existingDetails.remove();
+        }
+
+        // 개별 분석 결과 표시 영역 생성
+        const analysesContainer = document.createElement('div');
+        analysesContainer.className = 'individual-analyses';
+        analysesContainer.innerHTML = `
+            <details class="analysis-details">
+                <summary>개별 이미지 분석 결과 보기 (${analyses.length}개)</summary>
+                <div class="analyses-content">
+                    ${analyses.map((analysis, index) => `
+                        <div class="individual-analysis">
+                            <h4>이미지 ${index + 1} 분석</h4>
+                            <pre>${analysis.replace(`Analysis ${index + 1}:\n`, '')}</pre>
+                        </div>
+                    `).join('')}
+                </div>
+            </details>
+        `;
+
+        // 메인 프롬프트 출력 다음에 추가
+        const promptOutput = document.getElementById('promptOutput');
+        promptOutput.appendChild(analysesContainer);
     }
 
     showLoading(show) {

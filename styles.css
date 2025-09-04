@@ -275,6 +275,71 @@ h1 {
     background: #2ecc71 !important;
 }
 
+.individual-analyses {
+    margin-top: 2rem;
+    border-top: 1px solid #e9ecef;
+    padding-top: 1.5rem;
+}
+
+.analysis-details {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.analysis-details summary {
+    background: #e9ecef;
+    padding: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #2c3e50;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.analysis-details summary:hover {
+    background: #dee2e6;
+}
+
+.analyses-content {
+    padding: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.individual-analysis {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.individual-analysis:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.individual-analysis h4 {
+    color: #3498db;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.individual-analysis pre {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #2c3e50;
+    margin: 0;
+}
+
 .error-message {
     background: #e74c3c;
     color: white;

@@ -18,69 +18,88 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        // 개별 이미지 분석을 위한 영어 프롬프트
-        const individualAnalysisPrompt = `Analyze this drawing/artwork image in extreme detail to understand its art style completely. Focus on these key elements:
+        // 개별 이미지 분석을 위한 전문적인 영어 프롬프트
+        const individualAnalysisPrompt = `Analyze this artwork/illustration with extreme precision to create an AI-art-generation-ready style analysis. Focus on elements that directly translate to effective prompts:
 
-**LINE ART ANALYSIS:**
-- Line weight variation and control (uniform vs. dynamic)
-- Pen pressure patterns (soft vs. hard)
-- Line endings (sharp, rounded, tapered)
-- Sketch roughness level (clean vs. rough)
-- Cleanup style and precision level
+**LINE ART TECHNICAL ANALYSIS:**
+- Line weight control: uniform thickness, variable line weight, or pressure-sensitive strokes
+- Line quality descriptors: clean vector lines, hand-drawn sketchy lines, precise digital lines, organic brush strokes
+- Line termination: sharp endings, rounded caps, tapered brush ends, or rough sketch marks
+- Outline treatment: thick black outlines (cel-shading style), thin precise lines, no outlines (painterly), or colored outlines
+- Line confidence: confident single strokes vs tentative multiple strokes vs constructed geometric lines
 
-**FORM AND PROPORTIONS:**
-- Human proportions (how many heads tall, what's exaggerated)
-- Facial ratios and features (eye size, nose shape, mouth position, jawline)
-- Hand and foot detail level and simplification
-- Deformation level and specific exaggerated parts
-- Overall human figure representation style
+**RENDERING STYLE CLASSIFICATION:**
+- Primary technique: flat cel-shading, soft painting style, hard-edge vector art, traditional media simulation, or hybrid approach
+- Shading method: cell/toon shading with distinct color zones, gradient painting with soft transitions, or realistic light rendering
+- Color application: solid flat colors, gradient fills, textured brush painting, airbrush effects, or watercolor bleeding
+- Detail level: minimalist/simplified, moderate detail, or highly detailed/realistic approach
 
-**RENDERING TECHNIQUES:**
-- Cell shading vs painting style vs hybrid approach
-- Main color palette characteristics and tone
-- Gradient usage and technique (smooth vs stepped)
-- Highlight and rim lighting treatment
-- Color saturation and brightness tendencies
+**COLOR PALETTE AND THEORY:**
+- Palette type: monochromatic, analogous, complementary, triadic, or rainbow spectrum
+- Saturation level: desaturated/muted tones, medium saturation, or highly saturated/vibrant colors
+- Value contrast: high contrast with deep shadows, medium contrast, or low contrast/flat lighting
+- Color temperature: warm-biased, cool-biased, or balanced temperature palette
+- Special color effects: neon/glowing colors, pastel softness, earth tones, or metallic/iridescent effects
 
-**SHADING AND LIGHTING:**
-- Light source setup (single, multiple, ambient)
-- Shadow edge treatment (hard vs soft shadows)
-- Reflected light and bounce light usage
-- Ambient occlusion representation
-- Volume and form expression methods
+**LIGHTING AND DIMENSIONAL RENDERING:**
+- Light source type: single directional light, multiple light sources, ambient flat lighting, or dramatic rim lighting
+- Shadow characteristics: hard-edged shadows, soft gradient shadows, cast shadows present/absent, or stylized shadow shapes
+- Highlight treatment: sharp specular highlights, soft diffuse highlights, rim light effects, or no highlights (flat style)
+- Subsurface effects: skin translucency, fabric light transmission, or solid opaque rendering
+- Atmospheric effects: depth haze, light rays, particle effects, or clear/flat atmosphere
 
-**TEXTURE AND DETAIL:**
-- Hair rendering style (chunks, strand details, texture)
-- Clothing fold and fabric representation patterns
-- Skin texture treatment (smooth, rough, detail level)
-- Special effects (gloss, transparency, reflection)
-- Accessory and prop rendering style
+**CHARACTER DESIGN PROPORTIONS:**
+- Head-to-body ratio: realistic 7-8 heads, stylized 6-7 heads, or exaggerated 4-5 heads (chibi/cute style)
+- Facial feature proportions: large eyes (anime style), realistic proportions, or stylized/caricature features  
+- Body type rendering: anatomically accurate, stylized/idealized, or simplified/geometric shapes
+- Age representation: child-like features, teenager proportions, adult anatomy, or elderly characteristics
 
-**STYLE SIGNATURES:**
-- Unique eye and eyebrow expression
-- Nose and mouth simplification or emphasis methods
-- Finger and joint representation characteristics
-- Background treatment style (simple vs detailed)
-- Character-background relationship
+**TEXTURE AND SURFACE QUALITY:**
+- Skin rendering: smooth/polished, soft/painted, textured/realistic, or simplified flat
+- Hair technique: individual strand detail, chunky/grouped sections, flat color shapes, or painterly masses
+- Fabric representation: detailed folds and creases, simplified geometric folds, or flat graphic shapes
+- Material indication: glossy/reflective surfaces, matte/diffuse materials, or stylized material representation
 
-**TECHNICAL ASPECTS:**
-- Brush types and texture effects used
-- Blending modes and layer structure estimation
-- Post-processing effects (color correction, filters)
-- Noise or texture overlay usage
-- Overall workflow estimation
+**STYLISTIC GENRE IDENTIFICATION:**
+- Cultural style markers: Western cartoon/animation, Japanese anime/manga, Korean manhwa, European comic, or traditional art influence
+- Era/movement influence: modern digital art, 90s anime style, retro poster art, classical painting techniques, or contemporary illustration trends
+- Medium simulation: digital painting, traditional watercolor, oil painting, pencil sketch, or vector graphics appearance
 
-Provide a detailed technical analysis in English that captures the exact style characteristics.`;
+Provide specific, actionable style descriptors that would work effectively in AI art generation prompts. Use precise technical terminology that AI models recognize for style control.`;
 
-        // 종합 분석을 위한 영어 프롬프트
-        const synthesisPrompt = `Based on the following individual art style analyses, create a comprehensive and unified art style description that captures the common elements and overall characteristics. Synthesize the information to create a single, detailed prompt that can be used to recreate this exact art style.
+        // 종합 분석을 위한 AI 아트 생성 최적화 프롬프트
+        const synthesisPrompt = `You are an expert AI art prompt engineer. Based on the following individual style analyses, create the most effective and precise prompt for AI image generation tools (Stable Diffusion, Midjourney, etc.) that will reproduce this exact art style.
 
-Format the final result as a complete, actionable prompt in this structure:
-"[Overall Style Description], [Line Art Characteristics], [Coloring Method], [Shading Treatment], [Proportions and Forms], [Detail Level], [Special Effects], [Overall Atmosphere]"
+**SYNTHESIS REQUIREMENTS:**
+1. Identify the most consistent and defining style elements across all analyses
+2. Translate technical art terms into AI-prompt-friendly keywords that models recognize
+3. Structure the prompt for maximum effectiveness with modern AI art generators
+4. Include both positive descriptors and implied negative space (what to avoid)
+5. Balance specificity with flexibility for different subjects
 
-The final prompt should be precise enough for AI art generators or artists to recreate the exact same style.
+**OUTPUT FORMAT:**
+Create a production-ready prompt in this optimized structure:
 
-Individual analyses:`;
+**MAIN STYLE PROMPT:**
+"[Primary art medium/technique], [line art style], [coloring method], [lighting approach], [character proportions], [detail level], [cultural/genre influence], [color palette], [special visual effects], [overall mood/atmosphere]"
+
+**TECHNICAL MODIFIERS:**
+- Aspect ratio recommendations
+- Suggested CFG scale range
+- Key negative prompts to avoid unwanted elements
+- Additional style-specific keywords for fine-tuning
+
+**WEIGHT SUGGESTIONS:**
+- Which elements should be emphasized with increased weights (1.2-1.4)
+- Which elements might need de-emphasis (0.8-0.9)
+
+**ALTERNATIVE PHRASINGS:**
+- 2-3 alternative ways to describe the core style for testing variations
+- Style-specific keywords that work well with this particular art approach
+
+Focus on creating a prompt that will consistently generate images in the analyzed style across different subjects and compositions. Use terminology that AI models have strong associations with in their training data.
+
+Individual style analyses:`;
 
         let individualAnalyses = [];
 

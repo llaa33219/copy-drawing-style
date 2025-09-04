@@ -4,11 +4,13 @@ AI를 활용한 그림 스타일 완전 분석 도구입니다. 이미지를 업
 
 ## 기능
 
-- 이미지 드래그 앤 드롭 업로드
-- 여러 이미지 동시 분석
-- 상세한 그림 스타일 분석 (선화, 채색, 음영, 비율, 질감 등)
-- 바로 사용 가능한 프롬프트 생성
-- 클립보드 복사 기능
+- 이미지 드래그 앤 드롭 업로드 (최대 20개)
+- 개별 이미지 정밀 분석 후 종합 분석
+- **AI 아트 생성 최적화된** 전문 스타일 분석
+- **실제 사용 가능한** 프롬프트 생성 (Stable Diffusion, Midjourney 등)
+- 가중치 및 네거티브 프롬프트 추천
+- 개별 분석 결과 상세 보기
+- 원클릭 클립보드 복사
 
 ## 기술 스택
 
@@ -80,15 +82,35 @@ DASHSCOPE_API_KEY=your-dashscope-api-key-here
 3. "스타일 분석 시작" 버튼 클릭
 4. 분석 완료 후 생성된 프롬프트를 복사하여 사용
 
-## 분석 요소
+## 🎨 전문 분석 요소
 
-- **선화**: 선의 굵기, 강약, 펜 압력, 끝처리 방식
-- **형태와 비율**: 인체 비율, 얼굴 특징, 데포르메 정도
-- **렌더링**: 셀 셰이딩, 색상 팔레트, 그라데이션
-- **음영**: 광원 설정, 그림자 처리, 반사광
-- **질감**: 머리카락, 옷감, 피부 표현
-- **스타일 시그니처**: 눈, 코, 입, 배경 처리
-- **기술적 세부사항**: 브러시, 블렌딩, 후처리 효과
+### **LINE ART TECHNICAL ANALYSIS**
+- 선 굵기 제어 (uniform/variable/pressure-sensitive)
+- 선 품질 (vector/sketchy/digital/organic brush)
+- 윤곽선 처리 (thick outlines/thin/no outlines/colored outlines)
+
+### **RENDERING STYLE CLASSIFICATION** 
+- 주요 기법 (cel-shading/painting/vector/traditional media simulation)
+- 셰이딩 방법 (toon shading/gradient/realistic lighting)
+- 색상 적용 (flat colors/gradients/textured brushing)
+
+### **COLOR PALETTE AND THEORY**
+- 팔레트 타입 (monochromatic/complementary/triadic)
+- 채도 수준 (desaturated/medium/highly saturated)
+- 색온도 (warm/cool/balanced)
+
+### **LIGHTING AND DIMENSIONAL RENDERING**
+- 광원 타입 (single/multiple/ambient/rim lighting)
+- 하이라이트 처리 (sharp specular/soft/rim light/flat)
+- 대기 효과 (depth haze/light rays/particles)
+
+### **CHARACTER DESIGN PROPORTIONS**
+- 두신비 (realistic 7-8/stylized 6-7/chibi 4-5)
+- 얼굴 특징 (large eyes/realistic/caricature)
+
+### **STYLISTIC GENRE IDENTIFICATION**
+- 문화적 스타일 (Western cartoon/anime/manhwa/European comic)
+- 시대/운동 영향 (modern digital/90s anime/retro/classical)
 
 ## 라이선스
 
