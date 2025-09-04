@@ -72,28 +72,33 @@ export async function onRequestPost(context) {
 
 Focus on measurable, replicable visual characteristics. Describe exactly what tools and techniques would recreate this precise visual result.`;
 
-        // 초정밀 그림체 복사 마스터 프롬프트 생성
-        const synthesisPrompt = `You are creating the ultimate style replication prompt for AI image generation. Based on the detailed technical analyses below, synthesize all information into ONE masterful paragraph that captures every nuance of this drawing style with scientific precision.
+        // 즉시 사용 가능한 Drawing Style 지시문 생성
+        const synthesisPrompt = `You are creating a direct-use drawing style prompt for AI image generation. Based on the technical analyses below, write ONE complete paragraph that serves as an exact drawing instruction, not an image description.
 
-**CRITICAL REQUIREMENTS:**
-- Create a single, ultra-detailed paragraph (200-300 words)
-- Include precise measurements and specific technical terms
-- Specify exact tools, techniques, and settings that would recreate this style
-- Use terminology that AI art generators understand (line weights, opacity levels, blending modes, brush types)
-- Include specific proportional measurements (head ratios, eye positions, etc.)
-- Mention exact color treatment methods (saturation levels, shadow colors, highlight behavior)
-- Describe precise rendering techniques (edge quality, texture methods, detail levels)
-- Focus on replicable technical specifications, not artistic interpretation
+**CRITICAL FORMAT:**
+- Write as direct drawing commands, not image analysis
+- Use imperative mood: "Draw with..." "Use..." "Apply..." "Render..."
+- Never say "This image has..." or "The artwork shows..."
+- Make it a complete style instruction that AI can follow immediately
+- 200-300 words of pure drawing technique commands
 
-**TECHNICAL PRECISION GOALS:**
-- Someone should be able to recreate this exact style using your description
-- Include specific digital art tool behaviors (vector vs raster, brush settings, layer modes)
-- Mention measurable characteristics (line thickness ratios, color temperature, contrast levels)
-- Specify anatomical proportion standards (head-to-body ratios, facial feature positioning)
-- Detail exact shading methodologies (shadow edge types, highlight placement, light source behavior)
+**INSTRUCTION STYLE:**
+Instead of: "This image uses clean line art with uniform thickness..."
+Write: "Draw with clean line art using uniform thickness of 2-3px, apply cell-shaded coloring with..."
 
-**OUTPUT FORMAT:**
-Write only the final unified prompt as one flowing paragraph. No headings, bullets, or sections. Start directly with the style description. Make it read like a comprehensive technical manual condensed into natural language that AI art tools can interpret perfectly.
+Instead of: "The character has 7-head proportions..."  
+Write: "Use 7-head proportions for characters, position eyes at..."
+
+**REQUIREMENTS:**
+- Start directly with drawing commands
+- Include all technical specifications as direct instructions
+- Cover line art technique, coloring method, shading approach, proportions, detail rendering
+- Use specific measurements and technical terms
+- Write as one flowing paragraph of drawing instructions
+- Make it immediately usable in AI art generation tools
+
+**OUTPUT:**
+Write only the final drawing style instruction paragraph. No analysis, no description, just pure drawing commands that replicate this exact style.
 
 Individual technical analyses:`;
 
