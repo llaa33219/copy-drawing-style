@@ -18,76 +18,67 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        // 최신 AI 이미지 생성 모델 최적화된 개별 이미지 스타일 분석 프롬프트
-        const individualAnalysisPrompt = `You are a master art style analyst for modern AI image generation systems like GPT-4o, FLUX, Midjourney v7, and Claude 3.5 Sonnet. Your mission is to analyze this artwork and create a comprehensive natural language description that can be directly used to recreate this exact artistic style.
+        // 그림체 복사에 특화된 시각적 특징 분석 프롬프트
+        const individualAnalysisPrompt = `You are analyzing this image to extract the exact visual drawing style for AI image generation. Focus ONLY on the visual characteristics that define how this artwork looks, not the content, story, or emotions.
 
-Focus on creating flowing, descriptive sentences rather than technical bullet points. Modern AI models excel at understanding nuanced artistic descriptions written in natural language.
+**LINE ART STYLE:**
+Describe the line work: thickness variation, line endings, sketchy vs clean, pressure sensitivity, outline treatment, line texture and quality.
 
-**ARTISTIC ESSENCE DESCRIPTION:**
-Describe the overall artistic mood, atmosphere, and emotional quality. What feeling does this artwork evoke? How would you describe it to someone who has never seen it?
+**COLORING METHOD:**
+Describe the exact coloring technique: flat colors vs gradients, cell shading vs soft painting, color blending style, saturation levels, color application method.
 
-**VISUAL STORYTELLING APPROACH:**
-How does the artist construct the visual narrative? Describe the compositional choices, focal points, and how elements guide the viewer's eye through the piece.
+**SHADING AND LIGHTING TECHNIQUE:**
+Describe how shadows and highlights are applied: hard vs soft shadows, light source behavior, contrast levels, shadow shapes, highlight placement.
 
-**LINE WORK CHARACTER:**
-Describe the personality of the lines - are they confident and bold, delicate and whispered, energetic and gestural, or precise and controlled? How do the lines contribute to the overall emotional impact?
+**PROPORTIONS AND ANATOMY:**
+Describe the specific proportional choices: head-to-body ratios, facial feature sizes and positions, limb proportions, stylization level, deformation patterns.
 
-**COLOR PHILOSOPHY:**
-What story do the colors tell? Describe the color relationships, harmonies, and how color choices support the mood. Are the colors vibrant and joyful, muted and contemplative, dramatic and intense, or soft and dreamy?
+**DETAIL RENDERING:**
+Describe how details are handled: hair texture style, clothing fold treatment, skin rendering, eye design, facial feature simplification.
 
-**LIGHTING NARRATIVE:**
-How does light behave in this artwork? Describe it as if explaining a lighting setup for a film scene - where does light come from, how does it shape forms, and what atmosphere does it create?
+**COLOR PALETTE:**
+Describe the specific color usage: dominant colors, color relationships, brightness/darkness tendency, color harmony type.
 
-**SURFACE QUALITY AND TEXTURE:**
-Describe how different materials and surfaces are portrayed. How does the artist make you feel the texture of hair, fabric, skin, or other elements through visual means?
+**VISUAL TEXTURE:**
+Describe surface treatments: smooth vs textured, brush stroke visibility, material representation style, finish quality (matte/glossy).
 
-**PROPORTIONAL AESTHETICS:**
-How does the artist interpret human or object proportions? Describe the stylistic choices in a way that conveys the aesthetic philosophy behind these decisions.
+**STYLE CLASSIFICATION:**
+What existing art styles does this most resemble? (anime, cartoon, realistic, painterly, vector, etc.)
 
-**STYLISTIC HERITAGE:**
-What artistic movements, cultural influences, or other artworks does this remind you of? Connect it to broader artistic contexts in a natural, conversational way.
+Focus purely on visual characteristics that would allow someone to replicate this exact drawing style. Avoid emotional, philosophical, or narrative descriptions.`;
 
-**TECHNICAL EXECUTION:**
-Describe how you imagine this artwork was created - what tools, techniques, and artistic processes contributed to its final appearance?
+        // 그림체 복사를 위한 종합 분석 프롬프트
+        const synthesisPrompt = `You are creating a style replication prompt for AI image generation. Based on the visual style analyses below, create a precise description that focuses ONLY on how to recreate this exact drawing style visually.
 
-**UNIQUE SIGNATURE ELEMENTS:**
-What makes this artwork instantly recognizable? Describe the distinctive visual elements that set it apart from other styles.
+**OBJECTIVE:**
+Create a natural language prompt that tells an AI exactly how to draw in this style. Focus on visual reproduction, not artistic meaning or emotions.
 
-Write your analysis as if you're describing this artwork to an AI that needs to understand not just what it looks like, but how it feels and what artistic intent drives every visual choice. Use rich, descriptive language that captures both technical aspects and emotional resonance.`;
+**OUTPUT FORMAT:**
 
-        // 최신 AI 이미지 생성 모델을 위한 종합 분석 프롬프트
-        const synthesisPrompt = `You are an expert prompt engineer specializing in modern AI image generation systems (GPT-4o, FLUX, Midjourney v7, Claude 3.5 Sonnet, DALL-E 3). Your mission is to synthesize the following individual artwork analyses into one masterful, natural language style description that will enable any modern AI to perfectly recreate this artistic style.
+**DRAWING STYLE PROMPT:**
+Write a clear, detailed paragraph (100-200 words) describing exactly how to replicate this visual style. Include:
 
-**SYNTHESIS OBJECTIVES:**
-1. Create a flowing, narrative-style description rather than technical specifications
-2. Focus on artistic emotion, mood, and visual storytelling elements
-3. Use language that modern AI models trained on vast artistic datasets will deeply understand
-4. Capture the essence that makes this style unique and immediately recognizable
-5. Write as if describing this style to a brilliant artist who needs to understand both technique and artistic soul
+- Line art technique and characteristics
+- Coloring and shading method
+- Proportional and anatomical approach  
+- Detail rendering style
+- Color palette and usage
+- Visual texture and finish
+- Overall technical approach
 
-**REQUIRED OUTPUT FORMAT:**
+**STYLE SPECIFICATIONS:**
+Provide specific technical details:
+- "Draw with [line style] using [thickness/texture]"
+- "Color using [technique] with [palette type]"
+- "Render shadows as [description]"
+- "Proportions should be [specific ratios/style]"
 
-**MASTER STYLE DESCRIPTION:**
-Create a comprehensive, eloquent paragraph (150-300 words) that captures the complete artistic essence of this style. Write it as a single flowing description that an AI can use directly as a style prompt. Focus on:
-- The emotional and atmospheric qualities
-- The artistic philosophy and approach  
-- The distinctive visual characteristics
-- The technical execution in artistic terms
-- The cultural and aesthetic context
-- The unique elements that define this style
+**REFERENCE CLASSIFICATION:**
+Identify the closest existing style category (anime, cartoon, realistic painting, etc.)
 
-**STYLE REPLICATION GUIDE:**
-Provide specific guidance in natural language about how to achieve this style:
-- "To recreate this style, focus on..."
-- "The key to capturing this aesthetic is..."
-- "This style achieves its distinctive look through..."
+Focus purely on visual replication instructions. Avoid emotional, atmospheric, or philosophical descriptions. The goal is functional style copying, not artistic interpretation.
 
-**ARTISTIC INSPIRATION CONTEXT:**
-Brief context about what artistic movements, influences, or creative approaches this style embodies.
-
-Remember: Modern AI image generation models are sophisticated enough to understand complex artistic language and emotional descriptions. They respond better to rich, descriptive prose than to technical parameters. Write as if you're describing this style to Claude, GPT-4o, or FLUX - they understand artistic nuance, cultural context, and aesthetic philosophy.
-
-Individual artwork analyses to synthesize:`;
+Individual style analyses:`;
 
         let individualAnalyses = [];
 
