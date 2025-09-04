@@ -5,15 +5,10 @@ class DrawingStyleAnalyzer {
         this.imagePreview = document.getElementById('imagePreview');
         this.analyzeButton = document.getElementById('analyzeButton');
         this.resultSection = document.getElementById('resultSection');
-        
-        // 새로운 UI 요소들
-        this.mainPromptText = document.getElementById('mainPromptText');
-        this.negativePromptText = document.getElementById('negativePromptText');
-        this.fullAnalysisText = document.getElementById('fullAnalysisText');
-        this.settingsGrid = document.getElementById('settingsGrid');
+        this.promptText = document.getElementById('promptText');
+        this.copyButton = document.getElementById('copyButton');
         
         this.selectedFiles = [];
-        this.currentResult = null;
         this.initializeEventListeners();
     }
 
@@ -30,19 +25,8 @@ class DrawingStyleAnalyzer {
         // 분석 버튼 이벤트
         this.analyzeButton.addEventListener('click', this.analyzeImages.bind(this));
         
-        // 탭 버튼 이벤트
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', this.switchTab.bind(this));
-        });
-        
-        // 복사 버튼들 이벤트
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.copy-button')) {
-                const button = e.target.closest('.copy-button');
-                const targetId = button.getAttribute('data-target');
-                this.copyToClipboard(targetId, button);
-            }
-        });
+        // 복사 버튼 이벤트
+        this.copyButton.addEventListener('click', this.copyToClipboard.bind(this));
         
         // Select 버튼 이벤트
         document.querySelector('.select-button').addEventListener('click', (e) => {
@@ -194,125 +178,10 @@ class DrawingStyleAnalyzer {
         });
     }
 
-    displayResult(analysisResult) {
-        this.currentResult = analysisResult;
-        this.parseAndDisplayResult(analysisResult);
+    displayResult(prompt) {
+        this.promptText.textContent = prompt;
         this.resultSection.hidden = false;
         this.resultSection.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    parseAndDisplayResult(analysisResult) {
-        try {
-            // AI 응답에서 구조화된 정보 추출
-            const sections = this.extractStructuredSections(analysisResult);
-            
-            // 메인 프롬프트 표시
-            if (sections.masterPrompt) {
-                this.mainPromptText.textContent = sections.masterPrompt;
-            }
-            
-            // 네거티브 프롬프트 표시
-            if (sections.negativePrompt) {
-                this.negativePromptText.textContent = sections.negativePrompt;
-            }
-            
-            // 설정값 표시
-            if (sections.technicalParams) {
-                this.displaySettings(sections.technicalParams);
-            }
-            
-            // 전체 분석 결과 표시
-            this.fullAnalysisText.textContent = analysisResult;
-            
-        } catch (error) {
-            console.error('결과 파싱 중 오류:', error);
-            // 파싱 실패 시 원본 텍스트 표시
-            this.fullAnalysisText.textContent = analysisResult;
-            this.mainPromptText.textContent = "파싱 오류 - 전체 분석 결과 탭을 확인하세요.";
-        }
-    }
-
-    extractStructuredSections(text) {
-        const sections = {};
-        
-        // 마스터 프롬프트 추출
-        const masterPromptMatch = text.match(/\*\*MASTER PROMPT:\*\*\s*\n"([^"]+)"/);
-        if (masterPromptMatch) {
-            sections.masterPrompt = masterPromptMatch[1].trim();
-        }
-        
-        // 네거티브 프롬프트 추출
-        const negativePromptMatch = text.match(/\*\*NEGATIVE PROMPT:\*\*\s*\n"([^"]+)"/);
-        if (negativePromptMatch) {
-            sections.negativePrompt = negativePromptMatch[1].trim();
-        }
-        
-        // 기술적 매개변수 추출
-        const paramsSection = text.match(/\*\*TECHNICAL PARAMETERS:\*\*([\s\S]*?)(?=\*\*|$)/);
-        if (paramsSection) {
-            sections.technicalParams = this.parseParameters(paramsSection[1]);
-        }
-        
-        return sections;
-    }
-
-    parseParameters(paramsText) {
-        const params = {};
-        
-        const cfgMatch = paramsText.match(/CFG Scale:\s*([^\n]+)/);
-        if (cfgMatch) params.cfgScale = cfgMatch[1].trim();
-        
-        const stepsMatch = paramsText.match(/Steps:\s*([^\n]+)/);
-        if (stepsMatch) params.steps = stepsMatch[1].trim();
-        
-        const samplerMatch = paramsText.match(/Sampling Method:\s*([^\n]+)/);
-        if (samplerMatch) params.sampler = samplerMatch[1].trim();
-        
-        return params;
-    }
-
-    displaySettings(params) {
-        this.settingsGrid.innerHTML = '';
-        
-        Object.entries(params).forEach(([key, value]) => {
-            const settingItem = document.createElement('div');
-            settingItem.className = 'setting-item';
-            
-            const label = this.getSettingLabel(key);
-            settingItem.innerHTML = `
-                <span class="setting-label">${label}</span>
-                <span class="setting-value">${value}</span>
-            `;
-            
-            this.settingsGrid.appendChild(settingItem);
-        });
-    }
-
-    getSettingLabel(key) {
-        const labels = {
-            cfgScale: 'CFG Scale',
-            steps: 'Steps',
-            sampler: 'Sampling Method'
-        };
-        return labels[key] || key;
-    }
-
-    switchTab(event) {
-        const targetTab = event.target.getAttribute('data-tab');
-        
-        // 모든 탭 버튼 비활성화
-        document.querySelectorAll('.tab-button').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        // 모든 탭 컨텐츠 숨김
-        document.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.remove('active');
-        });
-        
-        // 선택된 탭 활성화
-        event.target.classList.add('active');
-        document.getElementById(targetTab).classList.add('active');
     }
 
     showLoading(show) {
@@ -351,39 +220,32 @@ class DrawingStyleAnalyzer {
         }, 5000);
     }
 
-    async copyToClipboard(targetId, button) {
+    async copyToClipboard() {
         try {
-            const targetElement = document.getElementById(targetId);
-            if (!targetElement) return;
-            
-            const textToCopy = targetElement.textContent;
-            await navigator.clipboard.writeText(textToCopy);
+            await navigator.clipboard.writeText(this.promptText.textContent);
             
             // 성공 표시
-            const originalText = button.innerHTML;
-            button.innerHTML = `
+            const originalText = this.copyButton.innerHTML;
+            this.copyButton.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20,6 9,17 4,12"></polyline>
                 </svg>
                 복사완료!
             `;
-            button.classList.add('copy-success');
+            this.copyButton.classList.add('copy-success');
             
             setTimeout(() => {
-                button.innerHTML = originalText;
-                button.classList.remove('copy-success');
+                this.copyButton.innerHTML = originalText;
+                this.copyButton.classList.remove('copy-success');
             }, 2000);
             
         } catch (error) {
             console.error('클립보드 복사 실패:', error);
             // 폴백: 텍스트 선택
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                const range = document.createRange();
-                range.selectNode(targetElement);
-                window.getSelection().removeAllRanges();
-                window.getSelection().addRange(range);
-            }
+            const range = document.createRange();
+            range.selectNode(this.promptText);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
         }
     }
 }

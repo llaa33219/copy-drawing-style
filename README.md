@@ -1,57 +1,20 @@
 # Copy Drawing Style
 
-**AI 아트 생성 도구 최적화된 전문 그림 스타일 분석 시스템**
+최신 AI 이미지 생성 기술을 활용한 그림 스타일 완전 분석 도구입니다. 이미지를 업로드하면 최신 AI 모델(GPT-4o, FLUX, Midjourney v7, Claude 3.5)에 최적화된 자연어 스타일 프롬프트를 생성합니다.
 
-이미지를 업로드하면 AI가 전문적으로 분석하여 **Stable Diffusion, Midjourney, DALL-E** 등에서 즉시 사용 가능한 최적화된 프롬프트를 생성합니다.
+## 기능
 
-## 🎯 핵심 기능
+- 이미지 드래그 앤 드롭 업로드 (최대 20개)
+- 개별 이미지 분석 후 종합 분석
+- 최신 AI 모델 최적화된 자연어 스타일 분석
+- 예술적 감성과 기술적 특징을 모두 담은 프롬프트 생성
+- 원클릭 클립보드 복사 기능
 
-### ✨ AI 아트 생성 특화 분석
-- **개별 이미지 분석**: 각 이미지를 독립적으로 전문 분석
-- **통합 스타일 합성**: 여러 이미지의 공통 스타일 요소 추출
-- **AI 모델 최적화**: Stable Diffusion 등에 최적화된 키워드 생성
-
-### 🛠️ 전문적인 결과 제공
-- **마스터 프롬프트**: 바로 사용 가능한 메인 생성 프롬프트
-- **네거티브 프롬프트**: 원하지 않는 요소 제거용
-- **기술적 매개변수**: CFG Scale, Steps, Sampling 방법 추천
-- **가중치 최적화**: 스타일 요소별 가중치 제안
-
-### 💡 사용자 경험 
-- 최대 20개 이미지 동시 업로드
-- 직관적인 탭 기반 결과 표시
-- 원클릭 프롬프트 복사
-- 실시간 분석 진행 상황 표시
-
-## 🎨 분석 기술 스팩
-
-**LINE ART 기술 분석:**
-- Line weight control, pressure patterns, edge treatment
-- Vector vs hand-drawn vs digital line classification
-
-**RENDERING 분류:**  
-- Cel-shading, gradient painting, vector art identification
-- Color palette harmony and saturation analysis
-
-**LIGHTING 시스템:**
-- Key light, rim lighting, shadow type detection  
-- Atmospheric and volumetric lighting analysis
-
-**PROPORTIONS & ANATOMY:**
-- Figure ratios (realistic vs stylized vs chibi)
-- Facial feature analysis and deformation levels
-
-**STYLISTIC 분류:**
-- Cultural influences (anime, western, manhwa)
-- Era markers (90s, modern, retro)
-- Medium simulation detection
-
-## 🚀 기술 스택
+## 기술 스택
 
 - **프론트엔드**: HTML5, CSS3, Vanilla JavaScript
-- **백엔드**: Cloudflare Pages Functions (Workers)  
-- **AI 엔진**: Alibaba Cloud DashScope (Qwen-VL-Max-Latest)
-- **최대 토큰**: 32,768 (초장문 분석 지원)
+- **백엔드**: Cloudflare Pages Functions (Workers)
+- **AI API**: Alibaba Cloud DashScope (Qwen-VL-Max)
 
 ## 배포 가이드
 
@@ -110,22 +73,31 @@ wrangler pages dev . --compatibility-date=2024-01-15
 DASHSCOPE_API_KEY=your-dashscope-api-key-here
 ```
 
+## 🚀 2025년 최신 AI 최적화 분석 프로세스
+
+1. **예술적 감성 분석**: 각 이미지의 감정적 본질과 예술적 의도 파악
+2. **자연어 스타일 서술**: 최신 AI 모델이 이해하기 쉬운 서정적이고 풍부한 언어로 분석
+3. **통합 마스터 프롬프트**: 모든 분석을 종합하여 단일한 완벽한 자연어 스타일 설명 생성
+4. **직접 사용 가능**: GPT-4o, FLUX, Midjourney v7, Claude 3.5 등에 바로 입력 가능
+
 ## 사용법
 
 1. 웹사이트 접속
-2. 분석하고 싶은 그림 이미지 업로드 (드래그 앤 드롭 또는 파일 선택)
+2. 분석하고 싶은 그림 이미지 업로드 (드래그 앤 드롭, 최대 20개)
 3. "스타일 분석 시작" 버튼 클릭
-4. 분석 완료 후 생성된 프롬프트를 복사하여 사용
+4. AI가 생성한 자연어 스타일 프롬프트를 복사하여 최신 AI 이미지 생성 도구에 사용
 
-## 분석 요소
+## 분석 요소 (2025년 최신 AI 모델 기준)
 
-- **선화**: 선의 굵기, 강약, 펜 압력, 끝처리 방식
-- **형태와 비율**: 인체 비율, 얼굴 특징, 데포르메 정도
-- **렌더링**: 셀 셰이딩, 색상 팔레트, 그라데이션
-- **음영**: 광원 설정, 그림자 처리, 반사광
-- **질감**: 머리카락, 옷감, 피부 표현
-- **스타일 시그니처**: 눈, 코, 입, 배경 처리
-- **기술적 세부사항**: 브러시, 블렌딩, 후처리 효과
+- **예술적 본질**: 작품의 감정적 분위기와 예술적 철학
+- **시각적 스토리텔링**: 구성 요소와 시선 유도 방식
+- **선 작업의 개성**: 선의 감정적 특성과 표현력
+- **색채 철학**: 색상이 전달하는 이야기와 감정
+- **조명 내러티브**: 빛의 행동과 분위기 연출
+- **표면 질감**: 재질감을 시각적으로 전달하는 방식
+- **비례 미학**: 비율 선택에 담긴 예술적 의도
+- **문화적 유산**: 예술 사조와 문화적 영향
+- **독특한 시그니처**: 이 스타일만의 고유한 특징
 
 ## 라이선스
 
