@@ -18,51 +18,84 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        // 그림체 복사에 특화된 시각적 특징 분석 프롬프트
-        const individualAnalysisPrompt = `You are analyzing this image to extract the exact visual drawing style for AI image generation. Focus ONLY on the visual characteristics that define how this artwork looks, not the content, story, or emotions.
+        // 극도로 정밀한 그림체 복사 분석 프롬프트
+        const individualAnalysisPrompt = `You are a technical drawing style analyst for AI replication. Analyze this image with microscopic precision to extract every visual characteristic that defines this exact drawing style. Be extremely specific and technical.
 
-**LINE ART STYLE:**
-Describe the line work: thickness variation, line endings, sketchy vs clean, pressure sensitivity, outline treatment, line texture and quality.
+**LINE ART PRECISION ANALYSIS:**
+- Exact line weight measurements (thin/medium/thick ratios)
+- Line endings (blunt cut, tapered fade, rounded caps)
+- Line consistency (perfectly smooth vs slightly wobbly vs deliberately rough)
+- Pen tool behavior (digital clean vectors vs natural brush strokes vs pencil texture)
+- Outline treatment (thick outer lines vs uniform weight vs no outlines)
+- Line opacity (solid 100% vs semi-transparent vs variable opacity)
+- Line texture quality (perfectly clean vs slightly pixelated vs organic texture)
 
-**COLORING METHOD:**
-Describe the exact coloring technique: flat colors vs gradients, cell shading vs soft painting, color blending style, saturation levels, color application method.
+**PRECISE COLORING TECHNIQUE:**
+- Color application method (bucket fill vs brush painting vs airbrush)
+- Color transitions (hard edges vs soft gradients vs stepped color bands)
+- Saturation intensity (highly saturated vs muted vs mixed levels)
+- Color blending approach (no blending vs smooth gradients vs textured blending)
+- Base color treatment (flat solid colors vs subtle variations vs noisy texture)
+- Color temperature bias (warm-leaning vs cool-leaning vs neutral)
 
-**SHADING AND LIGHTING TECHNIQUE:**
-Describe how shadows and highlights are applied: hard vs soft shadows, light source behavior, contrast levels, shadow shapes, highlight placement.
+**EXACT SHADING METHODOLOGY:**
+- Shadow edge quality (razor-sharp vs soft-feathered vs semi-hard)
+- Highlight sharpness (pinpoint highlights vs broad soft highlights vs no highlights)
+- Shadow color approach (darker base color vs purple/blue shadows vs warm shadows)
+- Light direction consistency (single light source vs ambient vs multiple sources)
+- Shadow density (solid opaque vs semi-transparent vs gradient density)
+- Reflected light handling (strong bounced light vs subtle vs none)
 
-**PROPORTIONS AND ANATOMY:**
-Describe the specific proportional choices: head-to-body ratios, facial feature sizes and positions, limb proportions, stylization level, deformation patterns.
+**ANATOMICAL PROPORTION SPECIFICS:**
+- Head-to-body ratio (specific measurements like 6 heads tall, 8 heads tall)
+- Eye size relative to head (1/5 head width, 1/3 head width, etc.)
+- Eye positioning (center line, slightly above, significantly above)
+- Nose treatment (detailed realistic vs simple line vs dot vs absent)
+- Mouth size and position (small delicate vs full vs line vs dot)
+- Jaw and chin shape (sharp angular vs round soft vs square vs pointed)
+- Limb thickness and joints (realistic vs noodle-thin vs chunky vs stick-figure)
 
-**DETAIL RENDERING:**
-Describe how details are handled: hair texture style, clothing fold treatment, skin rendering, eye design, facial feature simplification.
+**MICRO-DETAIL RENDERING:**
+- Hair strand organization (individual strands vs chunky clumps vs flowing ribbons)
+- Hair texture simulation (straight smooth vs wavy vs curly vs spiky)
+- Clothing fold logic (realistic gravity vs stylized vs simplified vs angular)
+- Fabric thickness representation (thin silk vs thick cotton vs stiff leather)
+- Skin surface quality (perfectly smooth vs subtle texture vs pores vs shine)
+- Eye detail level (simple dots vs detailed iris vs reflection highlights vs pupils)
 
-**COLOR PALETTE:**
-Describe the specific color usage: dominant colors, color relationships, brightness/darkness tendency, color harmony type.
+**TECHNICAL EXECUTION MARKERS:**
+- Digital tool signatures (Photoshop brush textures vs vector clean lines vs traditional media simulation)
+- Pixel-level precision (clean anti-aliasing vs pixelated vs hand-drawn wobble)
+- Color depth (simple palette vs complex gradations vs limited color count)
+- Compression artifacts or intentional low-fi aesthetic
+- Layer blending evidence (multiply shadows vs overlay highlights vs normal blending)
 
-**VISUAL TEXTURE:**
-Describe surface treatments: smooth vs textured, brush stroke visibility, material representation style, finish quality (matte/glossy).
+Focus on measurable, replicable visual characteristics. Describe exactly what tools and techniques would recreate this precise visual result.`;
 
-**STYLE CLASSIFICATION:**
-What existing art styles does this most resemble? (anime, cartoon, realistic, painterly, vector, etc.)
+        // 초정밀 그림체 복사 마스터 프롬프트 생성
+        const synthesisPrompt = `You are creating the ultimate style replication prompt for AI image generation. Based on the detailed technical analyses below, synthesize all information into ONE masterful paragraph that captures every nuance of this drawing style with scientific precision.
 
-Focus purely on visual characteristics that would allow someone to replicate this exact drawing style. Avoid emotional, philosophical, or narrative descriptions.`;
+**CRITICAL REQUIREMENTS:**
+- Create a single, ultra-detailed paragraph (200-300 words)
+- Include precise measurements and specific technical terms
+- Specify exact tools, techniques, and settings that would recreate this style
+- Use terminology that AI art generators understand (line weights, opacity levels, blending modes, brush types)
+- Include specific proportional measurements (head ratios, eye positions, etc.)
+- Mention exact color treatment methods (saturation levels, shadow colors, highlight behavior)
+- Describe precise rendering techniques (edge quality, texture methods, detail levels)
+- Focus on replicable technical specifications, not artistic interpretation
 
-        // 그림체 복사를 위한 종합 분석 프롬프트
-        const synthesisPrompt = `You are creating a unified style replication prompt for AI image generation. Based on the visual style analyses below, synthesize all information into ONE complete, natural-flowing paragraph that tells an AI exactly how to draw in this style.
-
-**REQUIREMENTS:**
-- Create a single, comprehensive paragraph (150-250 words)
-- Include all technical details in natural language flow
-- Cover: line art, coloring method, shading, proportions, details, palette, texture
-- Use specific, actionable instructions
-- Write as one continuous description, not separate sections
-- Focus purely on visual replication techniques
-- Avoid emotional or artistic interpretation language
+**TECHNICAL PRECISION GOALS:**
+- Someone should be able to recreate this exact style using your description
+- Include specific digital art tool behaviors (vector vs raster, brush settings, layer modes)
+- Mention measurable characteristics (line thickness ratios, color temperature, contrast levels)
+- Specify anatomical proportion standards (head-to-body ratios, facial feature positioning)
+- Detail exact shading methodologies (shadow edge types, highlight placement, light source behavior)
 
 **OUTPUT FORMAT:**
-Write only the final unified prompt as a single paragraph, starting directly with the style description. Do not use headings, sections, or bullet points. Make it flow naturally as one complete instruction that can be directly used in AI art generation tools.
+Write only the final unified prompt as one flowing paragraph. No headings, bullets, or sections. Start directly with the style description. Make it read like a comprehensive technical manual condensed into natural language that AI art tools can interpret perfectly.
 
-Individual style analyses:`;
+Individual technical analyses:`;
 
         let individualAnalyses = [];
 
