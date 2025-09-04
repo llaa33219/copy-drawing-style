@@ -21,12 +21,13 @@ export async function onRequestPost(context) {
         // 순수 Drawing Style 기법 추출 프롬프트  
         const individualAnalysisPrompt = `You are analyzing ONLY the drawing technique and style, NOT the character or content. Ignore what is drawn and focus entirely on HOW it's drawn. Extract pure visual technique characteristics.
 
-**CRITICAL: ANALYZE TECHNIQUE, NOT CONTENT**
-- Do NOT mention characters, objects, or story elements
-- Focus ONLY on the drawing method and visual technique  
-- Describe HOW lines are drawn, NOT what they depict
-- Analyze HOW colors are applied, NOT what colors represent
-- Study HOW proportions work, NOT what body parts look like
+**CRITICAL: ANALYZE TECHNIQUE AND STYLE FEEL**
+- Focus on drawing method and visual technique
+- Include character expression style and emotional rendering approach
+- Describe HOW lines are drawn and their stylistic feel
+- Analyze HOW colors create mood and atmosphere  
+- Study proportional systems and their stylistic impact
+- Avoid specific content details but include style characteristics
 
 **LINE ART TECHNIQUE ANALYSIS:**
 - Line weight behavior: uniform thickness vs variable pressure
@@ -62,35 +63,44 @@ export async function onRequestPost(context) {
 - Edge quality standards: clean sharp edges vs soft blurred edges vs textured rough edges
 - Digital tool evidence: vector graphics precision vs raster painting effects vs traditional media simulation
 
-Focus exclusively on replicable drawing techniques. Never describe content, characters, or narrative elements.`;
+**EXPRESSION STYLE ANALYSIS:**
+- Emotional rendering approach: how emotions are conveyed through line work and shading
+- Facial expression methodology: subtle vs exaggerated, realistic vs stylized
+- Character design philosophy: cute/moe vs cool/serious vs dramatic vs playful style
+- Artistic mood creation: warm and friendly vs cool and distant vs dynamic vs calm
+- Style genre characteristics: anime, cartoon, realistic, semi-realistic, chibi, etc.
 
-        // 순수 Drawing Style 지시문 생성 (캐릭터 묘사 금지)
-        const synthesisPrompt = `You are creating a pure drawing technique prompt for AI image generation. Based on the technical analyses below, write ONE paragraph of drawing style commands that focus ONLY on HOW to draw, never WHAT to draw.
+Focus on replicable drawing techniques AND the artistic style feel. Include expression methods and mood creation techniques.`;
 
-**ABSOLUTE RESTRICTIONS:**
-- NEVER mention specific characters, people, objects, or content
-- NEVER describe what should be drawn (no "girl", "boy", "hair color", "clothing", etc.)
-- Focus ONLY on drawing technique and visual style methodology
-- Write pure technical drawing instructions
+        // Drawing Style 지시문 생성 (기법 + 스타일 느낌 포함)
+        const synthesisPrompt = `You are creating a comprehensive drawing style prompt for AI image generation. Based on the technical analyses below, write ONE paragraph that combines drawing techniques with artistic style characteristics.
 
-**CORRECT APPROACH:**
-Instead of: "Draw a character with long blonde hair wearing a red dress..."
-Write: "Use 7-head proportions, apply thin line art with 2px thickness, render with cell-shaded coloring..."
+**BALANCED APPROACH:**
+- Include drawing technique AND artistic style feel
+- Avoid specific character details but include expression style
+- Focus on HOW to achieve the artistic mood and character expression approach
+- Combine technical specifications with stylistic characteristics
 
-Instead of: "Create a smiling girl with large eyes..."  
-Write: "Position facial features with oversized eye proportions, use simple line-based mouth rendering..."
+**AVOID SPECIFIC CONTENT:**
+- Don't mention: "blonde hair", "red dress", "blue eyes", specific clothing
+- Don't describe: particular characters, specific objects, story elements
 
-**TECHNIQUE-ONLY REQUIREMENTS:**
-- Start with drawing method commands: "Use... Apply... Render... Draw with..."
-- Include line art technique, coloring method, shading approach, proportion system
-- Specify technical measurements and digital tool behaviors  
-- Cover edge quality, color application, highlight/shadow treatment
-- Focus on replicable visual techniques, never content description
-- Write as one flowing paragraph of pure drawing style methodology
-- 200-300 words of technical drawing instructions only
+**INCLUDE STYLE CHARACTERISTICS:**  
+- Expression methodology: "cute/moe style", "serious tone", "playful character expression"
+- Artistic mood: "warm friendly atmosphere", "cool dramatic feel", "soft gentle rendering"
+- Style genre: "anime-style", "cartoon approach", "realistic technique", "chibi methodology"
+- Emotional rendering: "exaggerated expressions", "subtle emotion conveyance", "dramatic facial rendering"
 
-**CRITICAL OUTPUT:**
-Write only drawing technique commands. No character descriptions, no content mentions, no object references. Pure drawing methodology only.
+**TECHNIQUE + STYLE REQUIREMENTS:**
+- Start with drawing method: "Use... Apply... Render... Draw with..."
+- Include: line art technique, coloring method, shading approach, proportion system
+- Add: artistic style feel, expression methodology, mood creation technique
+- Specify: technical measurements, digital tool behaviors, style characteristics
+- Write as one flowing paragraph combining technique and artistic approach
+- 200-300 words mixing technical drawing instructions with style feel
+
+**BALANCED OUTPUT:**
+Combine pure drawing techniques with artistic style characteristics. Include both HOW to draw technically and HOW to achieve the artistic style and expression feel.
 
 Individual technical analyses:`;
 
