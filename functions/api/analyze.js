@@ -18,87 +18,79 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        // 극도로 정밀한 그림체 복사 분석 프롬프트
-        const individualAnalysisPrompt = `You are a technical drawing style analyst for AI replication. Analyze this image with microscopic precision to extract every visual characteristic that defines this exact drawing style. Be extremely specific and technical.
+        // 순수 Drawing Style 기법 추출 프롬프트  
+        const individualAnalysisPrompt = `You are analyzing ONLY the drawing technique and style, NOT the character or content. Ignore what is drawn and focus entirely on HOW it's drawn. Extract pure visual technique characteristics.
 
-**LINE ART PRECISION ANALYSIS:**
-- Exact line weight measurements (thin/medium/thick ratios)
-- Line endings (blunt cut, tapered fade, rounded caps)
-- Line consistency (perfectly smooth vs slightly wobbly vs deliberately rough)
-- Pen tool behavior (digital clean vectors vs natural brush strokes vs pencil texture)
-- Outline treatment (thick outer lines vs uniform weight vs no outlines)
-- Line opacity (solid 100% vs semi-transparent vs variable opacity)
-- Line texture quality (perfectly clean vs slightly pixelated vs organic texture)
+**CRITICAL: ANALYZE TECHNIQUE, NOT CONTENT**
+- Do NOT mention characters, objects, or story elements
+- Focus ONLY on the drawing method and visual technique  
+- Describe HOW lines are drawn, NOT what they depict
+- Analyze HOW colors are applied, NOT what colors represent
+- Study HOW proportions work, NOT what body parts look like
 
-**PRECISE COLORING TECHNIQUE:**
-- Color application method (bucket fill vs brush painting vs airbrush)
-- Color transitions (hard edges vs soft gradients vs stepped color bands)
-- Saturation intensity (highly saturated vs muted vs mixed levels)
-- Color blending approach (no blending vs smooth gradients vs textured blending)
-- Base color treatment (flat solid colors vs subtle variations vs noisy texture)
-- Color temperature bias (warm-leaning vs cool-leaning vs neutral)
+**LINE ART TECHNIQUE ANALYSIS:**
+- Line weight behavior: uniform thickness vs variable pressure
+- Line quality: smooth vector lines vs organic brush strokes vs pencil texture
+- Line ending treatment: sharp cuts vs soft tapers vs rounded caps  
+- Outline methodology: thick borders vs thin outlines vs no outlines
+- Line opacity patterns: solid 100% vs semi-transparent effects
+- Line texture approach: clean digital vs textured traditional media simulation
 
-**EXACT SHADING METHODOLOGY:**
-- Shadow edge quality (razor-sharp vs soft-feathered vs semi-hard)
-- Highlight sharpness (pinpoint highlights vs broad soft highlights vs no highlights)
-- Shadow color approach (darker base color vs purple/blue shadows vs warm shadows)
-- Light direction consistency (single light source vs ambient vs multiple sources)
-- Shadow density (solid opaque vs semi-transparent vs gradient density)
-- Reflected light handling (strong bounced light vs subtle vs none)
+**COLORING METHOD ANALYSIS:**
+- Base color application: flat bucket fills vs brush painting vs gradient fills
+- Color transition technique: hard edges vs smooth blending vs stepped gradients
+- Saturation approach: high intensity vs muted tones vs mixed saturation levels
+- Color mixing method: pure flat colors vs subtle color variations vs textured color noise
+- Temperature bias: warm color dominance vs cool color preference vs neutral balance
 
-**ANATOMICAL PROPORTION SPECIFICS:**
-- Head-to-body ratio (specific measurements like 6 heads tall, 8 heads tall)
-- Eye size relative to head (1/5 head width, 1/3 head width, etc.)
-- Eye positioning (center line, slightly above, significantly above)
-- Nose treatment (detailed realistic vs simple line vs dot vs absent)
-- Mouth size and position (small delicate vs full vs line vs dot)
-- Jaw and chin shape (sharp angular vs round soft vs square vs pointed)
-- Limb thickness and joints (realistic vs noodle-thin vs chunky vs stick-figure)
+**SHADING TECHNIQUE ANALYSIS:**  
+- Shadow edge treatment: razor-sharp cell shading vs soft airbrush vs semi-hard gradients
+- Highlight application: pinpoint sharp highlights vs broad soft glows vs no highlights
+- Shadow color method: darker base colors vs colored shadows (purple/blue) vs warm shadows
+- Lighting logic: single directional light vs ambient lighting vs multiple light sources
+- Shadow density: solid opaque vs semi-transparent overlays vs gradient transparency
 
-**MICRO-DETAIL RENDERING:**
-- Hair strand organization (individual strands vs chunky clumps vs flowing ribbons)
-- Hair texture simulation (straight smooth vs wavy vs curly vs spiky)
-- Clothing fold logic (realistic gravity vs stylized vs simplified vs angular)
-- Fabric thickness representation (thin silk vs thick cotton vs stiff leather)
-- Skin surface quality (perfectly smooth vs subtle texture vs pores vs shine)
-- Eye detail level (simple dots vs detailed iris vs reflection highlights vs pupils)
+**PROPORTION SYSTEM ANALYSIS:**
+- Head-to-body measurement system: realistic 8-head vs stylized 6-head vs chibi 3-head proportions
+- Facial feature sizing: large eyes vs small eyes, nose prominence, mouth size relative to face
+- Feature positioning: eye placement height, nose-to-mouth distance, jaw line treatment
+- Body structure approach: realistic anatomy vs stylized simplification vs exaggerated proportions
 
-**TECHNICAL EXECUTION MARKERS:**
-- Digital tool signatures (Photoshop brush textures vs vector clean lines vs traditional media simulation)
-- Pixel-level precision (clean anti-aliasing vs pixelated vs hand-drawn wobble)
-- Color depth (simple palette vs complex gradations vs limited color count)
-- Compression artifacts or intentional low-fi aesthetic
-- Layer blending evidence (multiply shadows vs overlay highlights vs normal blending)
+**RENDERING TECHNIQUE ANALYSIS:**
+- Detail level consistency: highly detailed vs simplified vs mixed detail levels
+- Texture simulation methods: hair rendering technique, fabric fold treatment, surface quality representation
+- Edge quality standards: clean sharp edges vs soft blurred edges vs textured rough edges
+- Digital tool evidence: vector graphics precision vs raster painting effects vs traditional media simulation
 
-Focus on measurable, replicable visual characteristics. Describe exactly what tools and techniques would recreate this precise visual result.`;
+Focus exclusively on replicable drawing techniques. Never describe content, characters, or narrative elements.`;
 
-        // 즉시 사용 가능한 Drawing Style 지시문 생성
-        const synthesisPrompt = `You are creating a direct-use drawing style prompt for AI image generation. Based on the technical analyses below, write ONE complete paragraph that serves as an exact drawing instruction, not an image description.
+        // 순수 Drawing Style 지시문 생성 (캐릭터 묘사 금지)
+        const synthesisPrompt = `You are creating a pure drawing technique prompt for AI image generation. Based on the technical analyses below, write ONE paragraph of drawing style commands that focus ONLY on HOW to draw, never WHAT to draw.
 
-**CRITICAL FORMAT:**
-- Write as direct drawing commands, not image analysis
-- Use imperative mood: "Draw with..." "Use..." "Apply..." "Render..."
-- Never say "This image has..." or "The artwork shows..."
-- Make it a complete style instruction that AI can follow immediately
-- 200-300 words of pure drawing technique commands
+**ABSOLUTE RESTRICTIONS:**
+- NEVER mention specific characters, people, objects, or content
+- NEVER describe what should be drawn (no "girl", "boy", "hair color", "clothing", etc.)
+- Focus ONLY on drawing technique and visual style methodology
+- Write pure technical drawing instructions
 
-**INSTRUCTION STYLE:**
-Instead of: "This image uses clean line art with uniform thickness..."
-Write: "Draw with clean line art using uniform thickness of 2-3px, apply cell-shaded coloring with..."
+**CORRECT APPROACH:**
+Instead of: "Draw a character with long blonde hair wearing a red dress..."
+Write: "Use 7-head proportions, apply thin line art with 2px thickness, render with cell-shaded coloring..."
 
-Instead of: "The character has 7-head proportions..."  
-Write: "Use 7-head proportions for characters, position eyes at..."
+Instead of: "Create a smiling girl with large eyes..."  
+Write: "Position facial features with oversized eye proportions, use simple line-based mouth rendering..."
 
-**REQUIREMENTS:**
-- Start directly with drawing commands
-- Include all technical specifications as direct instructions
-- Cover line art technique, coloring method, shading approach, proportions, detail rendering
-- Use specific measurements and technical terms
-- Write as one flowing paragraph of drawing instructions
-- Make it immediately usable in AI art generation tools
+**TECHNIQUE-ONLY REQUIREMENTS:**
+- Start with drawing method commands: "Use... Apply... Render... Draw with..."
+- Include line art technique, coloring method, shading approach, proportion system
+- Specify technical measurements and digital tool behaviors  
+- Cover edge quality, color application, highlight/shadow treatment
+- Focus on replicable visual techniques, never content description
+- Write as one flowing paragraph of pure drawing style methodology
+- 200-300 words of technical drawing instructions only
 
-**OUTPUT:**
-Write only the final drawing style instruction paragraph. No analysis, no description, just pure drawing commands that replicate this exact style.
+**CRITICAL OUTPUT:**
+Write only drawing technique commands. No character descriptions, no content mentions, no object references. Pure drawing methodology only.
 
 Individual technical analyses:`;
 
