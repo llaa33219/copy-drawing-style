@@ -37,14 +37,14 @@ Color application method: Flat bucket-fill solid colors, soft brush painting wit
 SHADING TECHNIQUE MICROSCOPY:
 Shadow edge quality: razor-sharp cell-shaded edges (0px blur), soft feathered edges (how many pixels of blur?), semi-hard gradients (specific transition distance), or textured rough edges? Highlight behavior: pinpoint sharp highlights (exact pixel size), broad soft glows (radius measurement), rim lighting effects, or no highlights? Shadow color science: darker versions of base colors, colored shadows (purple/blue/warm orange), multiply blend mode effects, or overlay color mixing? Light source logic: single directional lighting (from which angle?), ambient even lighting, multiple light sources (how many directions?), or dramatic directional lighting?
 
-PROPORTION MEASUREMENT SCIENCE:
-Exact measurement ratios: How many heads tall is the body? (6, 7, 8 heads?) Eye size relative to head width (1/5, 1/4, 1/3 of head width?). Eye positioning: centered on face middle, above center line, or below? Inter-eye distance: one eye width apart, closer, or wider? Nose treatment: detailed realistic rendering, simple line indication, small dot, or absent? Mouth size and positioning: small delicate (what percentage of face width?), full lips, simple line, or dot indication? Jaw shape specifics: sharp angular, soft rounded, square masculine, or pointed feminine? Body proportion style: realistic anatomy ratios, stylized elongation, shortened proportions, or exaggerated features?
+PROPORTION AND ANATOMY BREAKDOWN:
+CRITICAL: This is as important as line art and coloring! Measure exact proportional relationships: Body height in heads (6-head chibi, 7-head anime, 8-head realistic?). Head shape: round/oval/square/triangular? Eye size dominance: do eyes take up 1/5, 1/4, or 1/3 of head width? Eye vertical position: dead center, upper third, or lower on face? Eye separation: touching, one eye width apart, wider spacing? Nose prominence: fully detailed with nostrils, simple triangle, tiny dot, or completely absent? Mouth positioning: directly under nose, lower on chin, corner positioning? Mouth size: tiny dot, thin line, medium, or full prominent lips? Jaw definition: sharp V-shape, soft rounded, square masculine, heart-shaped feminine? Neck thickness: thin noodle, normal proportion, thick sturdy? Body proportions: realistic muscle definition, simplified tube shapes, exaggerated curves, stick-thin limbs?
 
-DETAIL RENDERING FORENSICS:
-Hair strand organization: Individual detailed strands, chunky grouped sections, flowing ribbon-like masses, or simplified shape blocks? Hair texture simulation: straight smooth surfaces, wavy undulation, curly spiral patterns, or spiky angular shapes? Surface quality evidence: perfectly smooth flat surfaces, subtle texture grain, visible brush strokes, or rough textured finish? Edge detail treatment: clean precise edges, soft slightly blurred edges, rough hand-drawn edges, or textured artistic edges?
+DETAIL RENDERING AND TEXTURE MASTERY:
+ESSENTIAL STYLE ELEMENT: Hair rendering philosophy - individual strand detail level, chunky section grouping, flowing mass treatment, or geometric block simplification? Hair texture physics: straight flat sheets, bouncy volume, wavy flow patterns, spiky angular points, or curly spiral organization? Clothing fold logic: realistic gravity-based wrinkles, stylized angular folds, minimal suggestion lines, or no fold detail? Fabric thickness indication: thin silk draping, medium cotton behavior, thick leather stiffness, or no material weight? Surface finish quality: mirror-smooth anime cell shading, subtle skin texture grain, visible brush stroke texture, or rough sketchy finish? Edge treatment consistency: perfectly clean vector edges, slightly soft anti-aliasing, hand-drawn wobble variation, or deliberate rough artistic edges?
 
-EXPRESSION STYLE ANALYSIS:
-Expression intensity scale: subtle realistic emotions, moderately stylized expressions, highly exaggerated cartoon emotions, or minimal expression approach? Facial expression methodology: detailed realistic muscle movement, simplified symbolic expression, geometric shape-based emotions, or abstract expression approach? Eye expression system: detailed iris/pupil rendering, simple dot eyes, symbolic shape eyes (circles, stars), or complex emotional eye design? Artistic mood creation technique: warm friendly visual temperature, cool distant atmosphere, high energy dynamic feel, or calm peaceful mood?
+CHARACTER EXPRESSION AND MOOD SYSTEM:
+CRUCIAL STYLE DEFINING ELEMENT: Emotional expression intensity - are emotions conveyed through: subtle micro-expressions with realistic muscle movement, moderately stylized but recognizable expressions, highly exaggerated cartoon symbol emotions (sweat drops, heart eyes, anger marks), or completely abstract geometric expression? Eye design complexity: detailed realistic iris/pupil with reflections and depth, simplified colored circles with basic highlights, symbolic shapes (stars, hearts, spirals), or minimal dots/lines? Facial feature expression method: realistic anatomical movement, symbolic shorthand (curved lines for smiles), geometric abstraction, or no expression detail? Overall mood creation: warm inviting atmosphere through soft curves and bright colors, cool distant feeling through sharp angles and muted tones, high energy through dynamic poses and vibrant colors, or calm peaceful through soft edges and pastels?
 
 Describe EVERY visible technique with forensic precision. Act like you're creating a perfect replication manual.`;
 
@@ -58,23 +58,30 @@ PERFECTION GOALS:
 - Make it read like a master artist's step-by-step technique guide
 - Balance technical precision with artistic style characteristics
 
-SYNTHESIS REQUIREMENTS:
+SYNTHESIS REQUIREMENTS - BALANCED COVERAGE:
 Transform analysis into commands: "The lines are 2px thick" becomes "Use 2px line thickness"
-Include exact measurements: pixel sizes, opacity percentages, proportion ratios, blur distances
-Specify tool behaviors: vector precision, brush textures, blend modes, edge treatments
-Add style feel: emotional expression approach, mood creation, artistic atmosphere
-Combine all elements: line art + coloring + shading + proportions + details + expression + mood
+EQUALLY EMPHASIZE ALL ELEMENTS - Don't focus only on lines and colors:
+- Line art technique (25% of focus): thickness, texture, endings, opacity
+- Coloring method (25% of focus): application, saturation, temperature, edges  
+- Proportions & anatomy (25% of focus): head ratios, feature sizes, positioning, body structure
+- Details & expression (25% of focus): rendering style, texture quality, emotional approach, mood creation
 
-MASTER INSTRUCTION FORMAT:
-Start immediately with drawing commands using imperative mood
-Flow naturally from technique to technique without section breaks
-Include specific numbers, percentages, and measurements throughout
-Mention artistic style characteristics and emotional expression methods
-End with overall artistic mood and style genre classification
-Write 250-350 words of pure technical artistry instruction
+Include exact measurements for ALL aspects: pixel sizes, opacity %, proportion ratios, blur distances, head measurements, feature percentages
+Specify complete tool behaviors: vector precision, brush textures, blend modes, edge treatments, detail levels
+Balance technical precision with artistic style characteristics throughout entire prompt
 
-ULTIMATE OUTPUT GOAL:
-Create the most comprehensive, precise, actionable drawing style instruction ever written. Someone should be able to follow this paragraph and produce visually identical artwork.
+MASTER INSTRUCTION FORMAT - COMPREHENSIVE COVERAGE:
+Start with proportion/anatomy commands (head ratios, feature positioning)
+Flow to line art technique (thickness, texture, endings)  
+Continue to coloring method (application, saturation, edges)
+Add shading approach (shadow types, highlight style)
+Include detail rendering (hair, texture, surface quality)
+Finish with expression style and overall mood
+Write 300-400 words ensuring ALL style elements get equal attention
+Never let lines/colors dominate - force balance across all drawing aspects
+
+CRITICAL SUCCESS METRIC:
+The final prompt must work for someone to recreate EVERYTHING about the style - not just pretty lines and colors, but exact proportions, detail levels, expression methods, and mood. Test: Could someone recreate the CHARACTER DESIGN PHILOSOPHY and EMOTIONAL EXPRESSION SYSTEM from your prompt?
 
 Individual forensic analyses:`;
 
