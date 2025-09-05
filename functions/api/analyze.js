@@ -18,72 +18,74 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        // 극정밀 Drawing Style 복사 분석 시스템  
-        const individualAnalysisPrompt = `You are a master drawing style analyst creating an EXACT visual blueprint for perfect style replication. Act like a forensic art analyst examining every microscopic detail.
+        // 실용적 Drawing Style 복사 분석기
+        const individualAnalysisPrompt = `You are a style copying expert. Analyze this image to extract the EXACT visual style characteristics that someone can immediately use to recreate the same style.
 
-MISSION: PERFECT STYLE REPLICATION
-- Analyze like you're creating a technical manual for exact reproduction
-- Include every visible technique that makes this style unique
-- Focus on measurable, observable, replicable characteristics
-- Treat this like reverse-engineering a drawing technique
-- Be so specific that someone could recreate the EXACT same visual result
+FOCUS ON ACTIONABLE STYLE ELEMENTS:
 
-LINE ART FORENSIC ANALYSIS:
-Examine lines like under a microscope: Exact pixel thickness (1px, 2px, 3px?), line opacity percentage (100%, 80%, variable?), line texture quality (perfectly smooth vector, slightly pixelated, hand-drawn wobble, brush texture grain?). Line pressure behavior: completely uniform thickness or does it vary dynamically? Line ending style: sharp vector cuts, soft brush tapers, rounded caps, rough sketch endings? Outline treatment: thick outer contours (how many pixels thick?), thin consistent outlines, variable weight outlines, or no outlines at all? Line color: pure black, dark brown, colored outlines matching base colors?
+LINE STYLE:
+What kind of lines? (clean vector lines, sketchy pencil lines, smooth brush strokes, rough textured lines)
+Line thickness: (very thin, medium, thick, variable thickness)
+Line color: (pure black, dark brown, colored outlines, no outlines)
 
-COLORING METHOD ANALYSIS:
-Color application method: Flat bucket-fill solid colors, soft brush painting with subtle variations, airbrush gradients, or textured color application? Edge treatment between colors: razor-sharp hard edges, soft anti-aliased blending, stepped gradient transitions, or rough textured borders? Color saturation intensity: maximum vibrant saturation, muted pastel tones, mixed saturation levels, or desaturated approach? Base color behavior: completely flat uniform colors, subtle color variations within shapes, noisy textured colors, or gradient-filled base colors? Color temperature dominance: warm color bias (reds/oranges/yellows), cool color bias (blues/purples/greens), or neutral balanced temperature?
+COLOR STYLE:
+Coloring method: (flat solid colors, soft gradients, cell shading, painterly blending)
+Color intensity: (bright vivid colors, muted pastels, high contrast, low saturation)
+Color palette: (warm colors, cool colors, limited palette, full spectrum)
 
-SHADING TECHNIQUE MICROSCOPY:
-Shadow edge quality: razor-sharp cell-shaded edges (0px blur), soft feathered edges (how many pixels of blur?), semi-hard gradients (specific transition distance), or textured rough edges? Highlight behavior: pinpoint sharp highlights (exact pixel size), broad soft glows (radius measurement), rim lighting effects, or no highlights? Shadow color science: darker versions of base colors, colored shadows (purple/blue/warm orange), multiply blend mode effects, or overlay color mixing? Light source logic: single directional lighting (from which angle?), ambient even lighting, multiple light sources (how many directions?), or dramatic directional lighting?
+PROPORTIONS:
+Head-to-body ratio: (chibi 3-4 heads, anime 6-7 heads, realistic 8 heads)
+Eye style: (large anime eyes, normal eyes, tiny eyes, detailed eyes, simple dot eyes)
+Face shape: (round, oval, angular, heart-shaped)
+Feature size: (big eyes small mouth, balanced features, exaggerated features)
 
-PROPORTION AND ANATOMY BREAKDOWN:
-CRITICAL: This is as important as line art and coloring! Measure exact proportional relationships: Body height in heads (6-head chibi, 7-head anime, 8-head realistic?). Head shape: round/oval/square/triangular? Eye size dominance: do eyes take up 1/5, 1/4, or 1/3 of head width? Eye vertical position: dead center, upper third, or lower on face? Eye separation: touching, one eye width apart, wider spacing? Nose prominence: fully detailed with nostrils, simple triangle, tiny dot, or completely absent? Mouth positioning: directly under nose, lower on chin, corner positioning? Mouth size: tiny dot, thin line, medium, or full prominent lips? Jaw definition: sharp V-shape, soft rounded, square masculine, heart-shaped feminine? Neck thickness: thin noodle, normal proportion, thick sturdy? Body proportions: realistic muscle definition, simplified tube shapes, exaggerated curves, stick-thin limbs?
+SHADING STYLE:
+Shadow type: (hard cell shadows, soft gradients, no shadows, dramatic shadows)
+Highlight style: (bright highlights, subtle highlights, rim lighting, no highlights)
+Light direction: (top lighting, side lighting, front lighting, ambient lighting)
 
-DETAIL RENDERING AND TEXTURE MASTERY:
-ESSENTIAL STYLE ELEMENT: Hair rendering philosophy - individual strand detail level, chunky section grouping, flowing mass treatment, or geometric block simplification? Hair texture physics: straight flat sheets, bouncy volume, wavy flow patterns, spiky angular points, or curly spiral organization? Clothing fold logic: realistic gravity-based wrinkles, stylized angular folds, minimal suggestion lines, or no fold detail? Fabric thickness indication: thin silk draping, medium cotton behavior, thick leather stiffness, or no material weight? Surface finish quality: mirror-smooth anime cell shading, subtle skin texture grain, visible brush stroke texture, or rough sketchy finish? Edge treatment consistency: perfectly clean vector edges, slightly soft anti-aliasing, hand-drawn wobble variation, or deliberate rough artistic edges?
+DETAIL LEVEL:
+Overall detail: (highly detailed, moderately detailed, simplified, minimalist)
+Hair rendering: (individual strands, chunky sections, simple shapes, flowing masses)
+Texture quality: (smooth surfaces, textured surfaces, rough sketchy, clean digital)
 
-CHARACTER EXPRESSION AND MOOD SYSTEM:
-CRUCIAL STYLE DEFINING ELEMENT: Emotional expression intensity - are emotions conveyed through: subtle micro-expressions with realistic muscle movement, moderately stylized but recognizable expressions, highly exaggerated cartoon symbol emotions (sweat drops, heart eyes, anger marks), or completely abstract geometric expression? Eye design complexity: detailed realistic iris/pupil with reflections and depth, simplified colored circles with basic highlights, symbolic shapes (stars, hearts, spirals), or minimal dots/lines? Facial feature expression method: realistic anatomical movement, symbolic shorthand (curved lines for smiles), geometric abstraction, or no expression detail? Overall mood creation: warm inviting atmosphere through soft curves and bright colors, cool distant feeling through sharp angles and muted tones, high energy through dynamic poses and vibrant colors, or calm peaceful through soft edges and pastels?
+ARTISTIC MOOD:
+Visual feel: (cute/kawaii, cool/edgy, warm/friendly, dark/dramatic, bright/cheerful)
+Style genre: (anime, cartoon, realistic, chibi, comic book, painterly)
 
-Describe EVERY visible technique with forensic precision. Act like you're creating a perfect replication manual.`;
+Give direct, clear descriptions that someone can immediately understand and copy.`;
 
-        // 마스터급 Drawing Style 복제 지시문 생성기
-        const synthesisPrompt = `You are a master AI art instructor creating the ULTIMATE style replication prompt. Based on the forensic analyses below, synthesize ALL technical details into ONE perfect paragraph that guarantees exact style reproduction.
+        // 즉시 사용 가능한 스타일 복사 프롬프트 생성기
+        const synthesisPrompt = `You are creating a perfect style copying prompt. Based on the analyses below, write ONE complete paragraph that tells an AI exactly how to recreate this drawing style.
 
-PERFECTION GOALS:
-- Create a single paragraph so precise that ANY AI could recreate this EXACT style
-- Include every measurable detail from the analyses
-- Convert technical observations into direct actionable commands
-- Make it read like a master artist's step-by-step technique guide
-- Balance technical precision with artistic style characteristics
+REQUIREMENTS:
+- Make it immediately usable in AI art tools like Stable Diffusion or Midjourney
+- Use clear, direct style keywords that AI tools understand
+- Include ALL key style elements in balanced way
+- Write as one flowing paragraph without sections
+- Focus on what makes this style unique and recognizable
 
-SYNTHESIS REQUIREMENTS - BALANCED COVERAGE:
-Transform analysis into commands: "The lines are 2px thick" becomes "Use 2px line thickness"
-EQUALLY EMPHASIZE ALL ELEMENTS - Don't focus only on lines and colors:
-- Line art technique (25% of focus): thickness, texture, endings, opacity
-- Coloring method (25% of focus): application, saturation, temperature, edges  
-- Proportions & anatomy (25% of focus): head ratios, feature sizes, positioning, body structure
-- Details & expression (25% of focus): rendering style, texture quality, emotional approach, mood creation
+INCLUDE THESE STYLE ELEMENTS EQUALLY:
+1. Line work style (clean vector, sketchy, textured, thick/thin)
+2. Color approach (flat colors, gradients, cell shading, palette type)
+3. Proportions (head ratios, eye size, face shape, body type)
+4. Shading method (hard shadows, soft gradients, lighting direction)
+5. Detail level (highly detailed, simplified, texture quality)
+6. Overall mood/feel (cute, dramatic, realistic, cartoon style)
 
-Include exact measurements for ALL aspects: pixel sizes, opacity %, proportion ratios, blur distances, head measurements, feature percentages
-Specify complete tool behaviors: vector precision, brush textures, blend modes, edge treatments, detail levels
-Balance technical precision with artistic style characteristics throughout entire prompt
+WRITE LIKE THIS EXAMPLE:
+"Draw in [style genre] with [line description], using [color method] with [palette type], [proportion details], [shading approach], [detail level], creating [mood/atmosphere]"
 
-MASTER INSTRUCTION FORMAT - COMPREHENSIVE COVERAGE:
-Start with proportion/anatomy commands (head ratios, feature positioning)
-Flow to line art technique (thickness, texture, endings)  
-Continue to coloring method (application, saturation, edges)
-Add shading approach (shadow types, highlight style)
-Include detail rendering (hair, texture, surface quality)
-Finish with expression style and overall mood
-Write 300-400 words ensuring ALL style elements get equal attention
-Never let lines/colors dominate - force balance across all drawing aspects
+MAKE IT ACTIONABLE:
+- Use terms AI tools recognize
+- Be specific but not overly technical
+- Make it sound natural, not like a list
+- Include style-defining characteristics
+- Balance all elements equally
 
-CRITICAL SUCCESS METRIC:
-The final prompt must work for someone to recreate EVERYTHING about the style - not just pretty lines and colors, but exact proportions, detail levels, expression methods, and mood. Test: Could someone recreate the CHARACTER DESIGN PHILOSOPHY and EMOTIONAL EXPRESSION SYSTEM from your prompt?
+Write ONE perfect paragraph (200-300 words) that captures the complete drawing style.
 
-Individual forensic analyses:`;
+Individual style analyses:`;
 
         let individualAnalyses = [];
 
