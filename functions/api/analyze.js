@@ -19,41 +19,71 @@ export async function onRequestPost(context) {
         }
 
         // 실용적 Drawing Style 복사 분석기
-        const individualAnalysisPrompt = `You are a style copying expert. Analyze this image to extract the EXACT visual style characteristics that someone can immediately use to recreate the same style.
+        const individualAnalysisPrompt = `You are an expert art style analyzer for recreating drawing styles. Analyze the provided image and describe its art style in detail using ONLY visual characteristics. Do NOT mention artist names, studio names, anime/manga titles, or time periods.
 
-FOCUS ON ACTIONABLE STYLE ELEMENTS:
+Describe the following elements in a practical, actionable way:
 
-LINE STYLE:
-What kind of lines? (clean vector lines, sketchy pencil lines, smooth brush strokes, rough textured lines)
-Line thickness: (very thin, medium, thick, variable thickness)
-Line color: (pure black, dark brown, colored outlines, no outlines)
+1. LINEART CHARACTERISTICS:
+   - Line thickness: (hairline thin / thin 1-2px / medium 2-3px / thick 3-5px / very thick 5px+)
+   - Line quality: (smooth vector-like / hand-drawn organic / sketchy rough / clean digital / traditional media)
+   - Line weight variation: (uniform consistent / tapered varied / pressure-sensitive / strategic emphasis)
+   - Line presence: (strong defined outlines / subtle light lines / minimal lines / completely lineless)
+   - Line color: (pure black / colored lines matching subjects / brown/sepia tones)
 
-COLOR STYLE:
-Coloring method: (flat solid colors, soft gradients, cell shading, painterly blending)
-Color intensity: (bright vivid colors, muted pastels, high contrast, low saturation)
-Color palette: (warm colors, cool colors, limited palette, full spectrum)
+2. SHADING AND LIGHTING:
+   - Shading technique: (flat no shading / 2-tone cel / 3-4 tone cel / smooth gradient / painterly blended)
+   - Shadow edge quality: (hard sharp edges / soft feathered / diffused blurry)
+   - Shadow complexity: (simple form shadows only / cast shadows included / ambient occlusion / complex lighting)
+   - Highlight style: (sharp specular / soft glow / rim lighting / no highlights / exaggerated shine)
+   - Overall lighting: (flat even / dramatic high contrast / soft diffused / backlit / multiple light sources)
 
-PROPORTIONS:
-Head-to-body ratio: (chibi 3-4 heads, anime 6-7 heads, realistic 8 heads)
-Eye style: (large anime eyes, normal eyes, tiny eyes, detailed eyes, simple dot eyes)
-Face shape: (round, oval, angular, heart-shaped)
-Feature size: (big eyes small mouth, balanced features, exaggerated features)
+3. COLOR PROPERTIES:
+   - Saturation level: (highly saturated vivid / moderately saturated / muted desaturated / nearly grayscale)
+   - Brightness range: (high key bright / balanced mid-tones / low key dark / full range)
+   - Color temperature: (warm oranges-reds / cool blues-purples / neutral balanced)
+   - Color harmony: (analogous similar hues / complementary contrasting / monochromatic / triadic / split-complementary)
+   - Color treatment: (flat solid colors / gradient transitions / color noise/grain / color bleeding)
 
-SHADING STYLE:
-Shadow type: (hard cell shadows, soft gradients, no shadows, dramatic shadows)
-Highlight style: (bright highlights, subtle highlights, rim lighting, no highlights)
-Light direction: (top lighting, side lighting, front lighting, ambient lighting)
+4. TEXTURE AND SURFACE:
+   - Overall finish: (smooth pristine digital / soft airbrushed / visible brush strokes / impasto thick paint)
+   - Texture overlay: (none / paper grain / canvas texture / noise grain / custom patterns)
+   - Edge treatment: (crisp sharp / soft atmospheric / fuzzy dreamy / deliberately rough)
+   - Material rendering: (simplified flat / suggested details / fully rendered / stylized interpretation)
 
-DETAIL LEVEL:
-Overall detail: (highly detailed, moderately detailed, simplified, minimalist)
-Hair rendering: (individual strands, chunky sections, simple shapes, flowing masses)
-Texture quality: (smooth surfaces, textured surfaces, rough sketchy, clean digital)
+5. DETAIL DENSITY:
+   - Facial features: (highly detailed / moderately detailed / simplified stylized / minimalist abstract)
+   - Hair rendering: (individual strands / chunky sections / simplified shapes / detailed flowing)
+   - Clothing/objects: (intricate patterns / moderate detail / simplified shapes / minimalist)
+   - Background: (highly detailed / moderately detailed / simplified / minimal / absent)
+   - Overall approach: (maximalist busy / balanced / minimalist clean)
 
-ARTISTIC MOOD:
-Visual feel: (cute/kawaii, cool/edgy, warm/friendly, dark/dramatic, bright/cheerful)
-Style genre: (anime, cartoon, realistic, chibi, comic book, painterly)
+6. CHARACTER PROPORTIONS (if applicable):
+   - Head-to-body ratio: (chibi 1:1-2 / cute 1:3-4 / standard 1:5-6 / realistic 1:7-8 / elongated 1:8+)
+   - Eye size: (very large dominant / large expressive / moderate / small realistic / minimal dots)
+   - Eye detail: (multiple highlights complex iris / simple highlights / solid color / line only)
+   - Facial feature size: (small nose/mouth / proportionate / realistic / exaggerated)
+   - Body type: (simplified geometric / stylized elegant / anatomically accurate / exaggerated muscular/curvy)
+   - Limb proportions: (shortened cute / standard / elongated graceful / deliberately distorted)
 
-Give direct, clear descriptions that someone can immediately understand and copy.`;
+7. COMPOSITION AND DEPTH:
+   - Perspective: (flat 2D / slight depth / full 3D perspective / isometric)
+   - Depth cues: (none / atmospheric fade / size scaling / overlapping layers / full atmospheric perspective)
+   - Focus technique: (everything sharp / selective focus blur / depth of field / vignette)
+   - Space treatment: (compressed flat / moderate depth / deep dimensional)
+
+8. SPECIAL EFFECTS:
+   - Glow/bloom: (none / subtle / pronounced / extreme)
+   - Particle effects: (none / sparkles / light particles / magical effects)
+   - Screen tone/pattern: (none / halftone dots / gradient screens / custom patterns)
+   - Post-processing: (none / color grading / filters / distortion / chromatic aberration)
+
+9. OVERALL AESTHETIC:
+   - Visual complexity: (simple clean / moderately complex / highly detailed / maximalist)
+   - Emotional tone: (cute cheerful / elegant refined / dramatic intense / calm serene / dark moody)
+   - Rendering approach: (graphic flat / illustrative / semi-realistic / painterly / photorealistic)
+   - Consistency: (uniform style throughout / mixed techniques / deliberately varied)
+
+Provide a comprehensive description using these categories. Be specific and use the exact options provided where applicable. Focus on what makes this style unique and immediately replicable.`;
 
         // 즉시 사용 가능한 스타일 복사 프롬프트 생성기
         const synthesisPrompt = `You are creating a perfect style copying prompt. Based on the analyses below, write ONE complete paragraph that tells an AI exactly how to recreate this drawing style.
