@@ -147,7 +147,7 @@ Individual style analyses:`;
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: 'qwen-vl-max-latest',
+                        model: 'qwen3-vl-235b-a22b-instruct',
                         messages: messages,
                         max_tokens: 32768,
                         temperature: 0.7
@@ -190,7 +190,7 @@ Individual style analyses:`;
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'qwen-vl-max-latest',
+                model: 'qwen3-vl-235b-a22b-instruct',
                 messages: synthesisMessages,
                 max_tokens: 32768,
                 temperature: 0.7
