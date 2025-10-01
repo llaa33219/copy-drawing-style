@@ -18,104 +18,41 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        // 실용적 Drawing Style 복사 분석기
-        const individualAnalysisPrompt = `You are an expert art style analyzer for recreating drawing styles. Analyze the provided image and describe its art style in detail using ONLY visual characteristics. Do NOT mention artist names, studio names, anime/manga titles, or time periods.
+        const individualAnalysisPrompt = `You are a forensic art style analyst. Your mission is to deconstruct and document the provided image's style with extreme precision, creating a technical blueprint for its exact replication. Every visual element must be cataloged. Do not be concise; be exhaustive.
 
-Describe the following elements in a practical, actionable way:
+Generate a detailed report structured with the following sections. For each section, write a descriptive paragraph.
 
-1. LINEART CHARACTERISTICS:
-   - Line thickness: (hairline thin / thin 1-2px / medium 2-3px / thick 3-5px / very thick 5px+)
-   - Line quality: (smooth vector-like / hand-drawn organic / sketchy rough / clean digital / traditional media)
-   - Line weight variation: (uniform consistent / tapered varied / pressure-sensitive / strategic emphasis)
-   - Line presence: (strong defined outlines / subtle light lines / minimal lines / completely lineless)
-   - Line color: (pure black / colored lines matching subjects / brown/sepia tones)
+**1. Line Art Blueprint:**
+Analyze the line art's core properties. Describe its weight (e.g., uniform, tapered, pressure-sensitive), thickness in pixels if possible, quality (e.g., clean digital vector, textured pencil, smooth ink), color (e.g., solid black, soft brown, colored), and its role in the image (e.g., strong defining outlines, minimal suggestive lines, completely lineless).
 
-2. SHADING AND LIGHTING:
-   - Shading technique: (flat no shading / 2-tone cel / 3-4 tone cel / smooth gradient / painterly blended)
-   - Shadow edge quality: (hard sharp edges / soft feathered / diffused blurry)
-   - Shadow complexity: (simple form shadows only / cast shadows included / ambient occlusion / complex lighting)
-   - Highlight style: (sharp specular / soft glow / rim lighting / no highlights / exaggerated shine)
-   - Overall lighting: (flat even / dramatic high contrast / soft diffused / backlit / multiple light sources)
+**2. Light & Shadow Map:**
+Deconstruct the lighting and shading. Identify the shading technique (e.g., hard-edged cel shading with 2/3 tones, soft-blended gradients, painterly brushwork). Describe the quality of shadow edges (sharp, soft, diffused). Detail the lighting setup (e.g., single top-left light source, dramatic backlighting, soft ambient light) and the style of highlights (e.g., sharp specular dots, soft glows, rim lighting).
 
-3. COLOR PROPERTIES:
-   - Saturation level: (highly saturated vivid / moderately saturated / muted desaturated / nearly grayscale)
-   - Brightness range: (high key bright / balanced mid-tones / low key dark / full range)
-   - Color temperature: (warm oranges-reds / cool blues-purples / neutral balanced)
-   - Color harmony: (analogous similar hues / complementary contrasting / monochromatic / triadic / split-complementary)
-   - Color treatment: (flat solid colors / gradient transitions / color noise/grain / color bleeding)
+**3. Color Palette DNA:**
+Define the image's color properties. Describe the overall saturation (e.g., highly saturated and vibrant, muted and desaturated), value range (e.g., high-key, low-key, full contrast), and color temperature (warm, cool, neutral). Identify any specific color harmonies or notable color choices.
 
-4. TEXTURE AND SURFACE:
-   - Overall finish: (smooth pristine digital / soft airbrushed / visible brush strokes / impasto thick paint)
-   - Texture overlay: (none / paper grain / canvas texture / noise grain / custom patterns)
-   - Edge treatment: (crisp sharp / soft atmospheric / fuzzy dreamy / deliberately rough)
-   - Material rendering: (simplified flat / suggested details / fully rendered / stylized interpretation)
+**4. Surface & Texture Profile:**
+Detail the textures and rendering of surfaces. Describe the overall finish (e.g., smooth digital, canvas texture, visible brushstrokes). Note any specific material rendering techniques for skin, hair, or clothing. Analyze edge control (e.g., crisp and sharp, soft and lost edges).
 
-5. DETAIL DENSITY:
-   - Facial features: (highly detailed / moderately detailed / simplified stylized / minimalist abstract)
-   - Hair rendering: (individual strands / chunky sections / simplified shapes / detailed flowing)
-   - Clothing/objects: (intricate patterns / moderate detail / simplified shapes / minimalist)
-   - Background: (highly detailed / moderately detailed / simplified / minimal / absent)
-   - Overall approach: (maximalist busy / balanced / minimalist clean)
+**5. Detail & Complexity Level:**
+Quantify the level of detail across the image. Describe the complexity of facial features, hair rendering (individual strands vs. simple shapes), clothing patterns, and background elements. Is the style minimalist, balanced, or maximalist in its detail?
 
-6. CHARACTER PROPORTIONS (if applicable):
-   - Head-to-body ratio: (chibi 1:1-2 / cute 1:3-4 / standard 1:5-6 / realistic 1:7-8 / elongated 1:8+)
-   - Eye size: (very large dominant / large expressive / moderate / small realistic / minimal dots)
-   - Eye detail: (multiple highlights complex iris / simple highlights / solid color / line only)
-   - Facial feature size: (small nose/mouth / proportionate / realistic / exaggerated)
-   - Body type: (simplified geometric / stylized elegant / anatomically accurate / exaggerated muscular/curvy)
-   - Limb proportions: (shortened cute / standard / elongated graceful / deliberately distorted)
+**6. Proportions & Anatomy Style (if applicable):**
+Document the character proportions. Describe the head-to-body ratio, the size and style of the eyes, and the structure of facial features. Characterize the overall body type and limb proportions (e.g., realistic, stylized, chibi).
 
-7. COMPOSITION AND DEPTH:
-   - Perspective: (flat 2D / slight depth / full 3D perspective / isometric)
-   - Depth cues: (none / atmospheric fade / size scaling / overlapping layers / full atmospheric perspective)
-   - Focus technique: (everything sharp / selective focus blur / depth of field / vignette)
-   - Space treatment: (compressed flat / moderate depth / deep dimensional)
-
-8. SPECIAL EFFECTS:
-   - Glow/bloom: (none / subtle / pronounced / extreme)
-   - Particle effects: (none / sparkles / light particles / magical effects)
-   - Screen tone/pattern: (none / halftone dots / gradient screens / custom patterns)
-   - Post-processing: (none / color grading / filters / distortion / chromatic aberration)
-
-9. OVERALL AESTHETIC:
-   - Visual complexity: (simple clean / moderately complex / highly detailed / maximalist)
-   - Emotional tone: (cute cheerful / elegant refined / dramatic intense / calm serene / dark moody)
-   - Rendering approach: (graphic flat / illustrative / semi-realistic / painterly / photorealistic)
-   - Consistency: (uniform style throughout / mixed techniques / deliberately varied)
-
-Provide a comprehensive description using these categories. Be specific and use the exact options provided where applicable. Focus on what makes this style unique and immediately replicable.`;
+Your analysis must be purely visual and objective, providing enough information for another artist or AI to replicate the style without ever seeing the original image.`;
 
         // 즉시 사용 가능한 스타일 복사 프롬프트 생성기
-        const synthesisPrompt = `You are creating a perfect style copying prompt. Based on the analyses below, write ONE complete paragraph that tells an AI exactly how to recreate this drawing style.
+        const synthesisPrompt = `You are a master prompt engineer specializing in perfect style replication for advanced generative AI. Your task is to synthesize the detailed forensic analyses below into a single, highly-descriptive, and unambiguous master prompt. The goal is to create a textual blueprint that, when given to an image generation AI, will reproduce the art style with maximum fidelity.
 
-REQUIREMENTS:
-- Make it immediately usable in AI art tools like Stable Diffusion or Midjourney
-- Use clear, direct style keywords that AI tools understand
-- Include ALL key style elements in balanced way
-- Write as one flowing paragraph without sections
-- Focus on what makes this style unique and recognizable
+**Instructions:**
+1.  Thoroughly review all the provided technical analyses. Identify and extract every key descriptor and stylistic nuance.
+2.  Weave these details into a single, comprehensive paragraph. Do not summarize or omit information for the sake of brevity. The prompt must be dense with descriptive detail.
+3.  Structure the paragraph logically. Start with the overall aesthetic, then flow through the core components: line art, color and light, shading, texture, detail level, and character proportions.
+4.  Use precise and evocative language that AI models can interpret effectively. For example, instead of just "detailed," specify "intricately detailed with fine patterns on clothing and individually rendered hair strands."
+5.  The final output must be ONE complete paragraph. It is a technical specification written in prose, designed for perfect replication. Every defining characteristic from the analyses must be included.
 
-INCLUDE THESE STYLE ELEMENTS EQUALLY:
-1. Line work style (clean vector, sketchy, textured, thick/thin)
-2. Color approach (flat colors, gradients, cell shading, palette type)
-3. Proportions (head ratios, eye size, face shape, body type)
-4. Shading method (hard shadows, soft gradients, lighting direction)
-5. Detail level (highly detailed, simplified, texture quality)
-6. Overall mood/feel (cute, dramatic, realistic, cartoon style)
-
-WRITE LIKE THIS EXAMPLE:
-"Draw in [style genre] with [line description], using [color method] with [palette type], [proportion details], [shading approach], [detail level], creating [mood/atmosphere]"
-
-MAKE IT ACTIONABLE:
-- Use terms AI tools recognize
-- Be specific but not overly technical
-- Make it sound natural, not like a list
-- Include style-defining characteristics
-- Balance all elements equally
-
-Write ONE perfect paragraph (200-300 words) that captures the complete drawing style.
-
-Individual style analyses:`;
+**The final prompt must be a masterclass in descriptive precision, leaving absolutely no aspect of the style to chance. Begin synthesis now based on the analyses below:**`;
 
         let individualAnalyses = [];
 
