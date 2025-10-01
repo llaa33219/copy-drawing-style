@@ -18,41 +18,45 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        const individualAnalysisPrompt = `You are a forensic art style analyst. Your mission is to deconstruct and document the provided image's style with extreme precision, creating a technical blueprint for its exact replication. Every visual element must be cataloged. Do not be concise; be exhaustive.
+        const individualAnalysisPrompt = `You are a forensic art style analyst. Your mission is to deconstruct the **STYLE** of the provided image, completely ignoring its subject matter. Create a technical blueprint of the artistic techniques used, making it possible to apply this style to ANY new subject.
 
-Generate a detailed report structured with the following sections. For each section, write a descriptive paragraph.
+**CRITICAL INSTRUCTION: Do NOT describe what is IN the image (e.g., "a girl with a sword"). Describe HOW things are drawn (e.g., "metallic surfaces are rendered with sharp, high-contrast specular highlights").**
 
-**1. Line Art Blueprint:**
-Analyze the line art's core properties. Describe its weight (e.g., uniform, tapered, pressure-sensitive), thickness in pixels if possible, quality (e.g., clean digital vector, textured pencil, smooth ink), color (e.g., solid black, soft brown, colored), and its role in the image (e.g., strong defining outlines, minimal suggestive lines, completely lineless).
+Generate a detailed report structured with the following sections. For each section, write a descriptive paragraph about the artistic technique.
 
-**2. Light & Shadow Map:**
-Deconstruct the lighting and shading. Identify the shading technique (e.g., hard-edged cel shading with 2/3 tones, soft-blended gradients, painterly brushwork). Describe the quality of shadow edges (sharp, soft, diffused). Detail the lighting setup (e.g., single top-left light source, dramatic backlighting, soft ambient light) and the style of highlights (e.g., sharp specular dots, soft glows, rim lighting).
+**1. Style of Line Art:**
+Analyze the rules of the line work. Is it present? If so, describe its weight (uniform, tapered), quality (clean vector, textured pencil), color, and thickness. How does the line art define forms?
 
-**3. Color Palette DNA:**
-Define the image's color properties. Describe the overall saturation (e.g., highly saturated and vibrant, muted and desaturated), value range (e.g., high-key, low-key, full contrast), and color temperature (warm, cool, neutral). Identify any specific color harmonies or notable color choices.
+**2. Style of Shading & Lighting:**
+Deconstruct the lighting and shading methodology. What is the technique (hard-edged cel shading, soft-blended gradients, painterly)? How are shadow edges treated (sharp, soft)? What is the underlying logic of the lighting (e.g., simple ambient occlusion, complex multi-source lighting)? How are highlights rendered?
 
-**4. Surface & Texture Profile:**
-Detail the textures and rendering of surfaces. Describe the overall finish (e.g., smooth digital, canvas texture, visible brushstrokes). Note any specific material rendering techniques for skin, hair, or clothing. Analyze edge control (e.g., crisp and sharp, soft and lost edges).
+**3. Style of Color Usage:**
+Define the rules of the color palette. Describe the typical saturation, value range, and temperature. Is there a consistent color harmony? How are colors applied (flat, gradients, textured)?
 
-**5. Detail & Complexity Level:**
-Quantify the level of detail across the image. Describe the complexity of facial features, hair rendering (individual strands vs. simple shapes), clothing patterns, and background elements. Is the style minimalist, balanced, or maximalist in its detail?
+**4. Style of Surface & Texture Rendering:**
+Detail the techniques for rendering surfaces. What is the default surface finish (smooth, textured, painterly)? How are different materials like skin, hair, or fabric typically rendered within this style?
 
-**6. Proportions & Anatomy Style (if applicable):**
-Document the character proportions. Describe the head-to-body ratio, the size and style of the eyes, and the structure of facial features. Characterize the overall body type and limb proportions (e.g., realistic, stylized, chibi).
+**5. Style of Detail & Complexity:**
+Quantify the stylistic approach to detail. Where is detail concentrated (e.g., eyes, accessories) and where is it simplified (e.g., backgrounds, clothing)? Is the overall style minimalist, balanced, or maximalist?
 
-Your analysis must be purely visual and objective, providing enough information for another artist or AI to replicate the style without ever seeing the original image.`;
+**6. Style of Proportions & Form (if applicable):**
+Document the rules for anatomical stylization. Describe the typical head-to-body ratio, eye-to-head ratio, and facial feature construction. How are forms simplified or exaggerated compared to reality?
+
+Your analysis must be a purely technical description of the style itself, providing a replicable formula.`;
 
         // 즉시 사용 가능한 스타일 복사 프롬프트 생성기
-        const synthesisPrompt = `You are a master prompt engineer specializing in perfect style replication for advanced generative AI. Your task is to synthesize the detailed forensic analyses below into a single, highly-descriptive, and unambiguous master prompt. The goal is to create a textual blueprint that, when given to an image generation AI, will reproduce the art style with maximum fidelity.
+        const synthesisPrompt = `You are a master prompt engineer creating a definitive style guide from technical analyses. Your task is to synthesize the forensic style reports below into a single, master prompt that describes the **ART STYLE** itself, divorced from any specific subject matter. The final prompt is a formula for recreating the style.
+
+**CRITICAL INSTRUCTION: The final prompt must describe a set of artistic rules and techniques. It must NOT contain any descriptions of the subjects from the original images (e.g., characters, objects, scenes). It must be universally applicable to any new subject.**
 
 **Instructions:**
-1.  Thoroughly review all the provided technical analyses. Identify and extract every key descriptor and stylistic nuance.
-2.  Weave these details into a single, comprehensive paragraph. Do not summarize or omit information for the sake of brevity. The prompt must be dense with descriptive detail.
-3.  Structure the paragraph logically. Start with the overall aesthetic, then flow through the core components: line art, color and light, shading, texture, detail level, and character proportions.
-4.  Use precise and evocative language that AI models can interpret effectively. For example, instead of just "detailed," specify "intricately detailed with fine patterns on clothing and individually rendered hair strands."
-5.  The final output must be ONE complete paragraph. It is a technical specification written in prose, designed for perfect replication. Every defining characteristic from the analyses must be included.
+1.  Review all the technical style analyses to build a complete picture of the artistic formula.
+2.  Synthesize all the stylistic rules—line art, shading, color, texture, detail, and proportions—into a single, comprehensive, and highly-descriptive paragraph.
+3.  Every sentence must describe a technique, a process, or a stylistic choice. For example, instead of "the girl has glowing eyes," write "eyes are rendered with a luminous glow effect and multiple, sharp specular highlights."
+4.  The paragraph must be a dense, technical, and unambiguous description. It is a prose-based style guide for an AI to execute perfectly.
+5.  Ensure every defining characteristic from the analyses is integrated. Omit nothing.
 
-**The final prompt must be a masterclass in descriptive precision, leaving absolutely no aspect of the style to chance. Begin synthesis now based on the analyses below:**`;
+**The final prompt must be a masterclass in describing artistic technique, enabling an AI to apply this exact style to any subject imaginable. Begin synthesis now based on the analyses below:**`;
 
         let individualAnalyses = [];
 
