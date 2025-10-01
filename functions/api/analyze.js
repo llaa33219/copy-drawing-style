@@ -18,45 +18,217 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        const individualAnalysisPrompt = `You are a forensic art style analyst. Your mission is to deconstruct the **STYLE** of the provided image, completely ignoring its subject matter. Create a technical blueprint of the artistic techniques used, making it possible to apply this style to ANY new subject.
+        // 최신 이미지 생성 모델용 그림체 완벽 묘사 분석기
+        const individualAnalysisPrompt = `You are an expert art style analyst. Describe this image's visual style in natural, flowing language as if explaining it to another artist. Modern AI image models understand conversational descriptions better than rigid lists.
 
-**CRITICAL INSTRUCTION: Do NOT describe what is IN the image (e.g., "a girl with a sword"). Describe HOW things are drawn (e.g., "metallic surfaces are rendered with sharp, high-contrast specular highlights").**
+Describe the style comprehensively, covering these aspects naturally:
 
-Generate a detailed report structured with the following sections. For each section, write a descriptive paragraph about the artistic technique.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📐 LINE ART TECHNICAL SPECS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Line weight range: Measure minimum to maximum thickness (e.g., "0.5px hairlines to 4px bold outlines")
+- Line consistency: Perfectly uniform / Hand-tremor organic / Variable pressure-sensitive / Strategic weight distribution
+- Line edge quality: Razor-sharp vector / Soft antialiased / Slightly fuzzy / Textured/grainy / Rough traditional media
+- Outline style: Complete bold borders / Selective accent lines only / Broken/sketchy lines / No outlines (painterly)
+- Line color treatment: Pure black #000000 / Dark brown/sepia / Colored to match subject / Gradient/multicolor lines
+- Corner/intersection handling: Sharp angular joins / Soft rounded joins / Overlapping loose / Clean vector nodes
+- Detail line usage: Fine interior details present / Minimal interior lines / No interior lines, only silhouettes
 
-**1. Style of Line Art:**
-Analyze the rules of the line work. Is it present? If so, describe its weight (uniform, tapered), quality (clean vector, textured pencil), color, and thickness. How does the line art define forms?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 COLOR SYSTEM ARCHITECTURE  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Palette scope: Limited color count (specify number) / Moderate variety / Full spectrum / Near-monochrome
+- Saturation profile: Ultra-vivid neon-like / High saturation / Medium saturation / Desaturated muted / Washed out pastel
+- Brightness distribution: High-key bright dominant / Balanced mid-tones / Low-key dark moody / Extreme contrast range
+- Color temperature bias: Warm (orange/red/yellow dominant) / Cool (blue/purple/cyan dominant) / Neutral balanced / Shifts per area
+- Color harmony system: Monochromatic (single hue variations) / Analogous (neighboring hues) / Complementary (opposite hues) / Triadic / Tetrad / Random eclectic
+- Color application method: Perfectly flat fills / Subtle gradients / Noisy/grainy fills / Textured color / Watercolor-like bleeds
+- Color edge treatment: Hard edges / Soft feathered / Color bleeding intentionally / Precise contained
 
-**2. Style of Shading & Lighting:**
-Deconstruct the lighting and shading methodology. What is the technique (hard-edged cel shading, soft-blended gradients, painterly)? How are shadow edges treated (sharp, soft)? What is the underlying logic of the lighting (e.g., simple ambient occlusion, complex multi-source lighting)? How are highlights rendered?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 SHADING & LIGHTING ENGINEERING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Shading method: No shading (flat) / 2-tone cel / 3-4 tone cel / 5+ tone gradient / Smooth continuous gradient / Painterly blended
+- Shadow edge hardness: Razor-sharp cutoff / Slightly soft / Heavily feathered blur / Gradient fade / Rough textured edge
+- Shadow color strategy: Pure multiply darkening / Hue-shifted (e.g., blue shadows) / Colored shadows / Reflected light in shadows
+- Shadow density: Subtle transparent / Medium density / Deep opaque / Extreme contrast
+- Highlight technique: No highlights / Simple white dots / Gradient shine / Rim lighting / Complex specular / Exaggerated anime shine
+- Light source: Single dominant source / Multiple sources / Ambient/flat lighting / Dramatic directional / Backlit silhouette
+- Ambient occlusion: Present in crevices / Absent / Stylized contact shadows
+- Reflected light: Bounce light visible / Not present / Stylized reflected colors
 
-**3. Style of Color Usage:**
-Define the rules of the color palette. Describe the typical saturation, value range, and temperature. Is there a consistent color harmony? How are colors applied (flat, gradients, textured)?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🖼️ TEXTURE & SURFACE FINISH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Base finish: Pristine smooth digital / Soft airbrushed / Visible brush strokes / Rough painterly / Impasto thick paint texture
+- Overlay texture: None / Fine paper grain / Canvas weave / Noise grain (specify %) / Halftone dots / Custom pattern
+- Texture application: Uniform across image / Selective on certain elements / Randomized / Directional brushwork
+- Edge rendering: Perfectly crisp / Slightly soft / Atmospheric fade / Deliberately rough/sketchy
+- Material indication: Simplified symbolic / Moderately detailed / Photorealistic / Stylized/abstract interpretation
 
-**4. Style of Surface & Texture Rendering:**
-Detail the techniques for rendering surfaces. What is the default surface finish (smooth, textured, painterly)? How are different materials like skin, hair, or fabric typically rendered within this style?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👤 CHARACTER DESIGN MATHEMATICS (if present)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Head-to-body ratio: Specify exact ratio (e.g., "1:2.5 super-deformed chibi" or "1:7.5 realistic")
+- Eye size relative to head: Specify percentage (e.g., "eyes are 1/3 of head height")
+- Eye shape: Round / Almond / Sharp angular / Droopy / Tareme (gentle slope) / Tsurime (sharp upward)
+- Eye detail level: Simple dot / Single highlight / Multiple highlights + iris detail / Photorealistic / Stylized pattern
+- Pupil/iris rendering: Solid color / Gradient / Detailed pattern / Reflective / Symbolic/geometric
+- Nose rendering: Detailed 3D / Simple wedge / Single line / Dot / Absent
+- Mouth rendering: Detailed lips / Simple line / Dot / Stylized shape / Expression-dependent detail
+- Face shape: Round soft / Oval standard / Sharp angular / Triangular / Square jaw / Long elegant
+- Chin prominence: Pointed / Rounded / Flat / Pronounced / Subtle
+- Body proportions: Anatomically accurate / Stylized slender / Muscular exaggerated / Curvy exaggerated / Geometric simplified
+- Limb thickness: Thin delicate / Standard / Thick sturdy / Variable
+- Hand/feet detail: Fully detailed / Simplified / Mitten-like / Hidden/avoided
+- Hair structure: Individual strands / Chunky sections / Geometric shapes / Flowing ribbons / Wild spiky / Gravity-defying
 
-**5. Style of Detail & Complexity:**
-Quantify the stylistic approach to detail. Where is detail concentrated (e.g., eyes, accessories) and where is it simplified (e.g., backgrounds, clothing)? Is the overall style minimalist, balanced, or maximalist?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 DETAIL DENSITY MAPPING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Foreground detail: Extremely intricate / High / Moderate / Low / Minimal
+- Mid-ground detail: (same scale)
+- Background detail: (same scale)
+- Detail consistency: Uniform throughout / Focal point detailed, rest simplified / Varied intentionally
+- Clothing/fabric: Intricate patterns and folds / Moderate wrinkles / Simplified shapes / Flat no folds
+- Hair strands: Individual strands visible / Grouped sections / Large chunks / Solid shapes
+- Object detail: Realistic complexity / Moderate / Simplified graphic / Iconic minimal
 
-**6. Style of Proportions & Form (if applicable):**
-Document the rules for anatomical stylization. Describe the typical head-to-body ratio, eye-to-head ratio, and facial feature construction. How are forms simplified or exaggerated compared to reality?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌌 SPATIAL & COMPOSITIONAL STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Perspective system: Flat 2D no perspective / Slight depth cues / Full linear perspective / Isometric / Fisheye distortion
+- Depth indicators: None (flat) / Size diminishing / Atmospheric perspective / Overlapping layers / Full 3D rendering
+- Background treatment: Highly detailed matching foreground / Simplified / Blurred bokeh / Abstract / Solid color / Gradient / Absent
+- Focus technique: Everything sharp / Selective focus blur / Depth of field / Vignette darkening / Cinematic blur
+- Spatial compression: Flat compressed / Moderate depth / Deep dimensional space
 
-Your analysis must be a purely technical description of the style itself, providing a replicable formula.`;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ SPECIAL EFFECTS & POST-PROCESSING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Glow/bloom: None / Subtle / Moderate / Extreme halation
+- Particle effects: None / Sparkles / Light rays / Magical aura / Environmental particles (dust, snow, etc.)
+- Screen tone: None / Manga halftone dots / Gradient screens / Custom patterns
+- Color grading: None / Warm filter / Cool filter / Faded vintage / High contrast / Muted desaturated / HDR-like
+- Chromatic aberration: None / Subtle / Pronounced color fringing
+- Vignette: None / Subtle / Heavy darkened corners
+- Grain/noise: None / Subtle film grain / Heavy noise / Digital artifact aesthetic
+- Other effects: (describe any unique effects like lens flares, motion blur, distortions, etc.)
 
-        // 즉시 사용 가능한 스타일 복사 프롬프트 생성기
-        const synthesisPrompt = `You are a master prompt engineer creating a definitive style guide from technical analyses. Your task is to synthesize the forensic style reports below into a single, master prompt that describes the **ART STYLE** itself, divorced from any specific subject matter. The final prompt is a formula for recreating the style.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎭 OVERALL AESTHETIC SIGNATURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Style family: Anime / Western cartoon / Semi-realistic illustration / Painterly / Graphic design / Vector art / Traditional media / Digital painting / Pixel art / Other (specify)
+- Rendering philosophy: Minimalist / Moderate / Highly detailed / Maximalist
+- Consistency: Perfectly uniform / Intentionally varied / Mixed media look
+- Mood/atmosphere: Cute cheerful / Elegant refined / Dramatic intense / Calm peaceful / Dark moody / Energetic vibrant / Melancholic / Other (specify)
+- Unique identifiers: (list any distinctive quirks that define this style - unusual color choices, signature techniques, recurring visual motifs, etc.)
 
-**CRITICAL INSTRUCTION: The final prompt must describe a set of artistic rules and techniques. It must NOT contain any descriptions of the subjects from the original images (e.g., characters, objects, scenes). It must be universally applicable to any new subject.**
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**Instructions:**
-1.  Review all the technical style analyses to build a complete picture of the artistic formula.
-2.  Synthesize all the stylistic rules—line art, shading, color, texture, detail, and proportions—into a single, comprehensive, and highly-descriptive paragraph.
-3.  Every sentence must describe a technique, a process, or a stylistic choice. For example, instead of "the girl has glowing eyes," write "eyes are rendered with a luminous glow effect and multiple, sharp specular highlights."
-4.  The paragraph must be a dense, technical, and unambiguous description. It is a prose-based style guide for an AI to execute perfectly.
-5.  Ensure every defining characteristic from the analyses is integrated. Omit nothing.
+FINAL OUTPUT FORMAT:
+Write a comprehensive technical report covering ALL sections above. Be extremely specific with measurements, ratios, and technical terms. If certain elements aren't applicable (e.g., no characters in a landscape), state "N/A" for that section. Your goal is forensic-level precision that enables perfect replication.`;
 
-**The final prompt must be a masterclass in describing artistic technique, enabling an AI to apply this exact style to any subject imaginable. Begin synthesis now based on the analyses below:**`;
+        // 완벽한 그림체 복사 프롬프트 합성기
+        const synthesisPrompt = `You are an expert AI art prompt engineer. You will receive detailed technical analyses of multiple images from the same art style. Your mission is to synthesize these into ONE PERFECT, COMPREHENSIVE style replication prompt.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CRITICAL REQUIREMENTS FOR THE PERFECT PROMPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. ✅ FORMAT STRUCTURE:
+   - Start with the core style genre/family (e.g., "anime style", "semi-realistic digital illustration", "cel-shaded cartoon")
+   - Build in LAYERS from general to specific
+   - Use CONCRETE, VISUAL descriptors that AI understands
+   - End with mood/atmosphere qualifiers
+
+2. ✅ MANDATORY ELEMENTS TO INCLUDE (in order of importance):
+
+   A. LINE ART (if present):
+      - Exact line weight (thin/medium/thick + pixel measurement if possible)
+      - Line quality (clean digital / sketchy / vector / hand-drawn)
+      - Line color (black / colored / variable)
+      - Outline presence (bold outlines / subtle / no outlines)
+   
+   B. COLOR SYSTEM:
+      - Saturation level (vivid / muted / desaturated / pastel)
+      - Color temperature (warm / cool / neutral)
+      - Palette description (limited color palette / full spectrum / monochrome + specific color notes)
+      - Color application (flat / gradients / textured)
+   
+   C. SHADING TECHNIQUE:
+      - Method (flat / cel-shaded / soft gradient / painterly)
+      - Shadow hardness (sharp / soft / blurred)
+      - Shadow colors (standard / hue-shifted / colored)
+      - Highlight style (sharp / soft / rim lighting / none)
+   
+   D. PROPORTIONS (if characters):
+      - Head-body ratio (chibi 1:2 / standard 1:6 / realistic 1:7-8)
+      - Eye size and detail (large expressive / realistic / simplified)
+      - Facial feature treatment (detailed / simplified / stylized)
+      - Body type (realistic / stylized / geometric)
+   
+   E. DETAIL LEVEL:
+      - Overall complexity (highly detailed / moderate / minimalist)
+      - Detail distribution (uniform / focal point emphasis)
+      - Texture presence (smooth / grainy / brushy / textured)
+   
+   F. DEPTH & SPACE:
+      - Perspective (flat 2D / slight depth / full 3D)
+      - Background treatment (detailed / simplified / blurred / solid)
+      - Focus (sharp / bokeh / depth of field)
+   
+   G. SPECIAL EFFECTS:
+      - Glow/bloom (none / subtle / strong)
+      - Particles, screen tones, filters (specify if present)
+      - Post-processing (color grading, grain, etc.)
+   
+   H. MOOD & AESTHETIC:
+      - Emotional tone (cute / dramatic / elegant / energetic / dark)
+      - Overall feel (modern / retro / fantasy / realistic)
+
+3. ✅ WRITING STYLE RULES:
+
+   ❌ DON'T:
+   - Don't use artist names, studio names, anime/manga titles
+   - Don't use vague terms like "nice" or "good"
+   - Don't write in sections or bullet points
+   - Don't use technical jargon AI can't understand
+   - Don't leave out any major element
+   
+   ✅ DO:
+   - Use AI-friendly keywords (terms found in Stable Diffusion/Midjourney/NovelAI)
+   - Be specific with measurements and ratios
+   - Write as ONE flowing descriptive paragraph
+   - Include subtle nuances that define the style
+   - Balance all elements proportionally
+   - Use sensory, visual language
+   - Include texture and finish descriptors
+
+4. ✅ PROMPT LENGTH: 250-400 words (comprehensive but not bloated)
+
+5. ✅ QUALITY CHECKLIST - Your final prompt must:
+   □ Be immediately copy-pastable into any AI art tool
+   □ Cover ALL major visual aspects
+   □ Use clear, concrete visual descriptors
+   □ Sound natural, not like a list
+   □ Capture the unique "fingerprint" of this style
+   □ Enable accurate replication without seeing the original
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXAMPLE OUTPUT FORMAT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"[Core style family] featuring [line art details], rendered with [color system specifics] showing [saturation/temperature notes]. The shading employs [shading technique] with [shadow characteristics] and [highlight description], creating [lighting mood]. [If characters: proportion details with head-body ratio, eye size/style, facial features]. The composition maintains [depth/perspective approach] with [background treatment] and [focus technique]. Details are [detail level] with [texture description], showing [specific detail notes]. [Special effects if any: glow, particles, etc.]. Color palette consists of [specific color notes] with [color harmony]. Surface finish is [texture/finish], edges are [edge treatment]. The overall aesthetic conveys [mood/atmosphere] with [unique identifying characteristics], resulting in a [final aesthetic summary]."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Now, analyze the individual style reports below and synthesize them into ONE PERFECT MASTER PROMPT following all rules above:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INDIVIDUAL STYLE ANALYSES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`;
 
         let individualAnalyses = [];
 
@@ -169,3 +341,4 @@ Your analysis must be a purely technical description of the style itself, provid
         }, { status: 500 });
     }
 }
+
