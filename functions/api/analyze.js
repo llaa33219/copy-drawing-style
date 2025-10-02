@@ -77,7 +77,7 @@ Synthesize the images into one perfect prompt now.`;
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'qwen-vl-max', // Use the latest and most powerful model
+                model: 'qwen3-vl-235b-a22b-instruct', // Reverted to the original model name
                 messages: messages,
                 max_tokens: 1500, // Reduced max_tokens as we expect a concise prompt
                 temperature: 0.5 // Lower temperature for more focused and consistent output
