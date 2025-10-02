@@ -18,91 +18,158 @@ export async function onRequestPost(context) {
             return Response.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 });
         }
 
-        const analysisPrompt = `You are a world-class art director and a master AI prompt engineer. Your task is to analyze a batch of images that all share the same distinct art style and synthesize their essence into a single, masterful, and descriptive prompt for a modern image generation AI (like DALL-E 3, Midjourney, or Stable Diffusion).
+        // 최신 이미지 생성 모델용 그림체 완벽 묘사 분석기
+        const individualAnalysisPrompt = `You are a master artist and art critic with decades of experience analyzing visual styles. Look at this image and describe its artistic style as if you're explaining it to another professional artist over coffee - use natural, flowing language that captures the soul of the artwork.
 
-**Analyze the provided images holistically and identify the core stylistic "DNA".** Look beyond the subject matter and focus on the artistic execution.
+Focus on these essential visual elements that modern AI art models understand instinctively:
 
-**Your generated prompt must be a single, flowing paragraph written in natural, evocative language.** It should be a rich tapestry of descriptive terms that, when given to an AI, will replicate the style with high fidelity.
+🎨 **Color & Palette**: Describe the color world - is it vibrant and saturated like a dream, or muted and desaturated like an old photograph? Are the colors warm and cozy like firelight, or cool and crisp like winter morning? How do the colors flow together - do they clash dramatically or harmonize peacefully? Note specific color relationships and any dominant hues that define the mood.
 
-**Structure your description by weaving together these key elements:**
+✏️ **Line & Drawing**: Look at the lines - are they clean and precise like digital vector art, or organic and flowing like natural brush strokes? Are the outlines bold and confident, or soft and whispery? Do the lines have weight and pressure variation, or are they uniform throughout? Notice how edges are rendered - sharp as a knife or soft as a whisper.
 
-1.  **Core Identity & Medium:** Start with a high-level description. Is it a digital painting, a cel-shaded animation still, a watercolor illustration, a vector graphic? What is the overall feeling? (e.g., "A vibrant and clean digital illustration with a slick, professional finish...")
+🌟 **Light & Shadow**: How does light behave in this world? Is the lighting dramatic and moody with deep, velvety shadows, or bright and even like studio lighting? Do shadows have color to them, or are they pure darkness? Are there highlights that sparkle and gleam, or is everything flatly illuminated? Notice the light direction and quality - is it a single light source casting long shadows, or ambient light wrapping around forms?
 
-2.  **Line Art:** Describe the lines. Are they sharp and clean, or soft and sketchy? Is there a consistent line weight, or does it vary? Are the outlines prominent or subtle? What color are the lines? (e.g., "...characterized by precise, razor-thin black outlines that have a subtle, pressure-sensitive quality, becoming slightly thicker at character joints...")
+🖼️ **Texture & Surface**: What does the surface feel like? Is it smooth and polished like digital perfection, or rough and tactile like canvas or paper? Are there visible brush strokes dancing across the surface, or is it so smooth you could slide your hand across it? Look for any texture patterns, grain, or surface treatments that give the image its unique tactile quality.
 
-3.  **Color Palette & Application:** Describe the colors. Is the palette vibrant and saturated, or muted and desaturated? Is it a limited color set or a full spectrum? Are the colors flat, or do they have gradients? (e.g., "...utilizing a high-saturation, pastel color palette dominated by soft pinks, sky blues, and creamy yellows. Colors are applied in perfectly flat, clean fills with no gradients...")
+👥 **Characters & Figures** (if present): Study the people or creatures - what are their proportions like? Are they stylized and exaggerated, or anatomically precise? How are their faces rendered - large expressive eyes that dominate the face, or realistic features in perfect proportion? Look at their poses, gestures, and how they move through space.
 
-4.  **Shading & Lighting:** How are shadows and highlights rendered? Is it flat, 2-tone cel shading, or soft, blended gradients? Where does the light seem to come from? (e.g., "...with minimal but effective 2-tone cel shading. Shadows are hard-edged and rendered in a slightly darker, cooler tone of the base color, suggesting a strong, single overhead light source.")
+🏗️ **Composition & Space**: How is the space organized? Is it flat and two-dimensional like a medieval tapestry, or does it have depth and perspective pulling you into the distance? Is the background detailed and busy, or simple and supportive? How do elements relate to each other in the frame?
 
-5.  **Texture & Finish:** What is the surface quality? Is it perfectly smooth and digital, or is there a subtle paper grain or canvas texture? (e.g., "...The entire piece has a matte finish, with a very subtle, fine-grained noise overlay that gives it an organic, printed feel.")
+✨ **Special Effects & Atmosphere**: What makes this image magical? Is there a glow or bloom that makes light sources radiate? Any particles floating in the air, or magical auras surrounding objects? Notice the overall mood - is it whimsical and playful, mysterious and brooding, energetic and alive, or serene and contemplative?
 
-6.  **Character Proportions & Features (if applicable):** If there are characters, describe their defining features. Are the proportions realistic, chibi, or stylized? How are the eyes, hair, and face rendered? (e.g., "...Characters are drawn in a semi-chibi style with a 1:3 head-to-body ratio, featuring large, expressive eyes with simple single-dot highlights and blocky, ribbon-like hair.")
+🎯 **Distinctive Signature**: What makes this style utterly unique? Is there a particular quirk, motif, or approach that you'd recognize anywhere? Maybe unusual color choices, signature brush techniques, or a very specific way of handling certain elements.
 
-7.  **Overall Mood & Atmosphere:** Conclude with the overall feeling the style evokes. Is it cheerful and energetic, calm and serene, or dark and moody? (e.g., "...The overall aesthetic is incredibly cute, cheerful, and friendly, creating a lighthearted and playful atmosphere.")
+Write this as a flowing, engaging description that another artist would find inspiring and technically useful. Be specific with visual details, but keep the language natural and artistic rather than clinical. Your description should help an AI perfectly replicate this exact aesthetic.`;
 
-**CRITICAL RULES:**
-- **DO NOT** use artist names, studio names, or the names of any specific media (e.g., "Ghibli style", "Pixar style"). Describe the *visuals*, not the origin.
-- **DO NOT** use bullet points or numbered lists in your final output. It must be a single paragraph.
-- The final output should **ONLY** be the generated prompt, without any introductions or explanations.
+        // 완벽한 그림체 복사 프롬프트 합성기
+        const synthesisPrompt = `You are a master prompt engineer who understands exactly how modern AI image models like GPT-4o, Qwen Image, and others think and create. You receive artistic style descriptions from multiple images that share the same visual aesthetic, and your job is to weave them into one perfect, flowing prompt that captures the soul of this style.
 
-Synthesize the images into one perfect prompt now.`;
+🎯 **Your Mission**: Create a single, natural-sounding prompt that an AI can immediately understand and use to replicate this exact artistic style. Think like the AI - what visual keywords, textures, lighting cues, and aesthetic markers would trigger the perfect recreation?
 
-        const userContent = [
-            {
-                type: "text",
-                text: analysisPrompt
-            }
-        ];
+✨ **Key Elements to Capture** (blend them naturally, don't list them):
 
-        images.forEach(imageUrl => {
-            userContent.push({
-                type: "image_url",
-                image_url: {
-                    url: imageUrl
+**Color Personality**: How do the colors feel? Are they warm and inviting like sunlight, cool and mysterious like moonlight, vibrant and electric like neon dreams, or soft and nostalgic like aged photographs? What color relationships make this style sing?
+
+**Line & Form Language**: What visual vocabulary does this style speak? Clean, precise lines like digital architecture, or flowing, organic strokes like natural growth? Bold, confident outlines or soft, whispering edges? Uniform weight or dancing pressure variations?
+
+**Light & Shadow Poetry**: How does illumination shape this world? Dramatic chiaroscuro with deep velvet shadows, or bright, even lighting like a perfect summer day? Do shadows carry color stories, or are highlights like stars in the night sky?
+
+**Texture & Surface Stories**: What does touching this artwork feel like? Smooth as glass, rough as tree bark, grainy like sand, or brushy like wind through grass? Any special surface treatments that give it that unmistakable tactile quality?
+
+**Character Essence** (if present): How do figures move through this aesthetic space? Stylized proportions that exaggerate emotion, or anatomical precision that grounds in reality? Eyes that dominate the soul, or features that blend harmoniously?
+
+**Spatial Symphony**: How is the world arranged? Flat storytelling like ancient tapestries, or dimensional depth that pulls you into infinity? Busy backgrounds that compete for attention, or supportive simplicity that lets subjects shine?
+
+**Magical Atmosphere**: What makes this style enchanting? Ethereal glows that make light dance, particle whispers floating through air, or moody atmospheres that wrap around your heart?
+
+**Unique Signature**: What single element would you recognize anywhere? That distinctive quirk, motif, or approach that makes this style utterly itself?
+
+🎨 **Writing Philosophy**: Write like a poet who paints with words. Make it flow like a river of visual inspiration. Be specific enough for perfect replication, but natural enough that it feels like describing a dream to a friend. Aim for 200-350 words that sing with visual music.
+
+📝 **Perfect Prompt Structure**: Start with the heart of the style, layer in visual details like building a painting, and end with the emotional resonance that makes it unforgettable.
+
+Now, take these artistic descriptions and distill them into visual poetry that any modern AI image model would kill to bring to life:`;
+
+        let individualAnalyses = [];
+
+        // 각 이미지를 개별적으로 분석
+        for (let i = 0; i < images.length; i++) {
+            try {
+                const messages = [
+                    {
+                        role: "user",
+                        content: [
+                            {
+                                type: "text",
+                                text: individualAnalysisPrompt
+                            },
+                            {
+                                type: "image_url",
+                                image_url: {
+                                    url: images[i]
+                                }
+                            }
+                        ]
+                    }
+                ];
+
+                const response = await fetch('https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${env.DASHSCOPE_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'qwen3-vl-235b-a22b-instruct', // 최신 Qwen 비전 모델 사용
+                        messages: messages,
+                        max_tokens: 32768,
+                        temperature: 0.7
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.choices && result.choices.length > 0) {
+                        individualAnalyses.push(`Analysis ${i + 1}:\n${result.choices[0].message.content}`);
+                    }
                 }
-            });
-        });
+            } catch (error) {
+                console.error(`이미지 ${i + 1} 분석 중 오류:`, error);
+            }
+        }
 
-        const messages = [
+        // 개별 분석 결과가 없으면 에러 반환
+        if (individualAnalyses.length === 0) {
+            return Response.json({ error: '이미지 분석에 실패했습니다.' }, { status: 500 });
+        }
+
+        // 모든 분석 결과를 종합하여 최종 프롬프트 생성
+        const synthesisMessages = [
             {
                 role: "user",
-                content: userContent
+                content: [
+                    {
+                        type: "text",
+                        text: synthesisPrompt + "\n\n" + individualAnalyses.join("\n\n")
+                    }
+                ]
             }
         ];
 
-        const response = await fetch('https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions', {
+        const synthesisResponse = await fetch('https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${env.DASHSCOPE_API_KEY}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'qwen3-vl-235b-a22b-instruct', // Reverted to the original model name
-                messages: messages,
-                max_tokens: 1500, // Reduced max_tokens as we expect a concise prompt
-                temperature: 0.5 // Lower temperature for more focused and consistent output
+                model: 'qwen-vl-max-2024-11-28', // 최신 Qwen 비전 모델 사용
+                messages: synthesisMessages,
+                max_tokens: 32768,
+                temperature: 0.7
             })
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('API 오류:', errorText);
+        if (!synthesisResponse.ok) {
+            const errorText = await synthesisResponse.text();
+            console.error('종합 분석 API 오류:', errorText);
             return Response.json({ 
-                error: `API 호출 실패: ${response.status}`,
+                error: `종합 분석 API 호출 실패: ${synthesisResponse.status}`,
                 details: errorText
-            }, { status: response.status });
+            }, { status: synthesisResponse.status });
         }
 
-        const result = await response.json();
+        const synthesisResult = await synthesisResponse.json();
         
-        if (!result.choices || result.choices.length === 0 || !result.choices[0].message.content) {
-            return Response.json({ error: '분석 결과가 비어있습니다.' }, { status: 500 });
+        if (!synthesisResult.choices || synthesisResult.choices.length === 0) {
+            return Response.json({ error: '종합 분석 결과가 비어있습니다.' }, { status: 500 });
         }
 
-        const finalPrompt = result.choices[0].message.content;
+        const finalPrompt = synthesisResult.choices[0].message.content;
 
         return Response.json({ 
             prompt: finalPrompt,
+            individualAnalyses: individualAnalyses,
             success: true 
         });
 
