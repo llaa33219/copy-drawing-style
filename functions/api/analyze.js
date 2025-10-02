@@ -19,56 +19,96 @@ export async function onRequestPost(context) {
         }
 
         // 최신 이미지 생성 모델용 그림체 완벽 묘사 분석기
-        const individualAnalysisPrompt = `You are a master artist and art critic with decades of experience analyzing visual styles. Look at this image and describe its artistic style as if you're explaining it to another professional artist over coffee - use natural, flowing language that captures the soul of the artwork.
+        const individualAnalysisPrompt = `You are a master art director and visual style expert. Analyze this image and describe its artistic style in a way that would allow perfect recreation by modern AI image generation models like Qwen Image, GPT-4o Image, or similar systems.
 
-Focus on these essential visual elements that modern AI art models understand instinctively:
+Focus on creating a natural, conversational description that captures the essence of the visual style. Modern AI models excel at understanding artistic descriptions that feel like you're explaining the look to another artist in a studio.
 
-🎨 **Color & Palette**: Describe the color world - is it vibrant and saturated like a dream, or muted and desaturated like an old photograph? Are the colors warm and cozy like firelight, or cool and crisp like winter morning? How do the colors flow together - do they clash dramatically or harmonize peacefully? Note specific color relationships and any dominant hues that define the mood.
+Key elements to describe naturally in your analysis:
 
-✏️ **Line & Drawing**: Look at the lines - are they clean and precise like digital vector art, or organic and flowing like natural brush strokes? Are the outlines bold and confident, or soft and whispery? Do the lines have weight and pressure variation, or are they uniform throughout? Notice how edges are rendered - sharp as a knife or soft as a whisper.
+🎯 CORE VISUAL IDENTITY:
+- What art movement or style family does this most resemble? (anime, realistic illustration, cartoon, painterly, digital art, etc.)
+- What's the overall mood and atmosphere? (cheerful and cute, dark and mysterious, elegant and refined, energetic and vibrant, etc.)
 
-🌟 **Light & Shadow**: How does light behave in this world? Is the lighting dramatic and moody with deep, velvety shadows, or bright and even like studio lighting? Do shadows have color to them, or are they pure darkness? Are there highlights that sparkle and gleam, or is everything flatly illuminated? Notice the light direction and quality - is it a single light source casting long shadows, or ambient light wrapping around forms?
+🎨 COLOR LANGUAGE:
+- How would you describe the color palette? (vibrant and saturated, muted and pastel, monochromatic, warm/cool tones)
+- Are colors flat and graphic, or do they have gradients and depth?
+- Is the lighting dramatic with strong contrasts, or soft and diffused?
 
-🖼️ **Texture & Surface**: What does the surface feel like? Is it smooth and polished like digital perfection, or rough and tactile like canvas or paper? Are there visible brush strokes dancing across the surface, or is it so smooth you could slide your hand across it? Look for any texture patterns, grain, or surface treatments that give the image its unique tactile quality.
+✏️ LINE & FORM TREATMENT:
+- How are lines handled? (clean and precise, sketchy and organic, bold and graphic, delicate and fine)
+- Are forms simplified and stylized, or detailed and realistic?
+- What's the level of detail? (highly intricate, moderately detailed, minimalist and clean)
 
-👥 **Characters & Figures** (if present): Study the people or creatures - what are their proportions like? Are they stylized and exaggerated, or anatomically precise? How are their faces rendered - large expressive eyes that dominate the face, or realistic features in perfect proportion? Look at their poses, gestures, and how they move through space.
+🔥 SHADING & TEXTURE:
+- How does light interact with surfaces? (smooth gradients, sharp shadows, soft diffusion, painterly blending)
+- Are there visible textures? (smooth digital, brush stroke texture, grainy film, canvas-like)
+- Any special effects? (glow, bloom, particles, filters, distortions)
 
-🏗️ **Composition & Space**: How is the space organized? Is it flat and two-dimensional like a medieval tapestry, or does it have depth and perspective pulling you into the distance? Is the background detailed and busy, or simple and supportive? How do elements relate to each other in the frame?
+📐 COMPOSITION & SPACE:
+- How is depth created? (flat 2D, layered depth, full perspective, isometric)
+- Background treatment? (detailed environment, blurred bokeh, solid colors, abstract patterns)
+- Focus and depth of field? (everything sharp, selective focus, atmospheric perspective)
 
-✨ **Special Effects & Atmosphere**: What makes this image magical? Is there a glow or bloom that makes light sources radiate? Any particles floating in the air, or magical auras surrounding objects? Notice the overall mood - is it whimsical and playful, mysterious and brooding, energetic and alive, or serene and contemplative?
+If there are characters or figures:
+- Proportions and anatomy style? (realistic, stylized, chibi, exaggerated)
+- Facial features treatment? (large expressive eyes, detailed realistic features, simplified cartoon)
+- Pose and movement style? (dynamic action, static elegant, cute gestures)
 
-🎯 **Distinctive Signature**: What makes this style utterly unique? Is there a particular quirk, motif, or approach that you'd recognize anywhere? Maybe unusual color choices, signature brush techniques, or a very specific way of handling certain elements.
-
-Write this as a flowing, engaging description that another artist would find inspiring and technically useful. Be specific with visual details, but keep the language natural and artistic rather than clinical. Your description should help an AI perfectly replicate this exact aesthetic.`;
+Write your analysis as a flowing, natural description that captures the unique visual fingerprint of this style. Make it detailed enough that someone could recreate this exact look, but conversational enough that an AI can understand and interpret it effectively.`;
 
         // 완벽한 그림체 복사 프롬프트 합성기
-        const synthesisPrompt = `You are a master prompt engineer who understands exactly how modern AI image models like GPT-4o, Qwen Image, and others think and create. You receive artistic style descriptions from multiple images that share the same visual aesthetic, and your job is to weave them into one perfect, flowing prompt that captures the soul of this style.
+        const synthesisPrompt = `You are a master AI art director who specializes in creating perfect replication prompts for modern image generation models like Qwen Image, GPT-4o Image, and similar systems.
 
-🎯 **Your Mission**: Create a single, natural-sounding prompt that an AI can immediately understand and use to replicate this exact artistic style. Think like the AI - what visual keywords, textures, lighting cues, and aesthetic markers would trigger the perfect recreation?
+I have multiple art style analyses from the same visual style. Your task is to synthesize them into ONE PERFECT, COMPREHENSIVE prompt that captures the complete visual essence and allows flawless recreation.
 
-✨ **Key Elements to Capture** (blend them naturally, don't list them):
+🎯 YOUR MISSION:
+Create a prompt that feels like you're describing a distinctive artistic style to another artist in a creative studio - natural, flowing, and rich with visual detail.
 
-**Color Personality**: How do the colors feel? Are they warm and inviting like sunlight, cool and mysterious like moonlight, vibrant and electric like neon dreams, or soft and nostalgic like aged photographs? What color relationships make this style sing?
+📝 CRITICAL REQUIREMENTS:
 
-**Line & Form Language**: What visual vocabulary does this style speak? Clean, precise lines like digital architecture, or flowing, organic strokes like natural growth? Bold, confident outlines or soft, whispering edges? Uniform weight or dancing pressure variations?
+1. START WITH CORE IDENTITY:
+   - Begin with the primary art style family (anime, digital illustration, cartoon, realistic, painterly, etc.)
+   - Immediately establish the overall mood and atmosphere
 
-**Light & Shadow Poetry**: How does illumination shape this world? Dramatic chiaroscuro with deep velvet shadows, or bright, even lighting like a perfect summer day? Do shadows carry color stories, or are highlights like stars in the night sky?
+2. BUILD VISUAL LAYERS NATURALLY:
+   - Line quality and treatment (clean precise, sketchy organic, bold graphic, delicate fine)
+   - Color language (vibrant saturated, muted pastel, warm/cool, flat/gradient)
+   - Lighting and shading approach (dramatic contrasts, soft diffusion, cel-shaded, painterly)
+   - Detail level and texture (highly intricate, smooth digital, brush stroke texture)
+   - Composition and depth (flat 2D, layered depth, full perspective)
 
-**Texture & Surface Stories**: What does touching this artwork feel like? Smooth as glass, rough as tree bark, grainy like sand, or brushy like wind through grass? Any special surface treatments that give it that unmistakable tactile quality?
+3. INCLUDE CHARACTER SPECIFICS (if applicable):
+   - Proportion style (chibi, realistic, stylized, exaggerated)
+   - Facial feature treatment (large expressive eyes, detailed realistic, simplified cartoon)
+   - Body type and pose style
 
-**Character Essence** (if present): How do figures move through this aesthetic space? Stylized proportions that exaggerate emotion, or anatomical precision that grounds in reality? Eyes that dominate the soul, or features that blend harmoniously?
+4. ADD UNIQUE SIGNATURE ELEMENTS:
+   - Special effects (glow, bloom, particles, filters)
+   - Texture finishes (smooth, grainy, canvas-like, digital clean)
+   - Any distinctive visual quirks that define this style
 
-**Spatial Symphony**: How is the world arranged? Flat storytelling like ancient tapestries, or dimensional depth that pulls you into infinity? Busy backgrounds that compete for attention, or supportive simplicity that lets subjects shine?
+5. END WITH EMOTIONAL RESONANCE:
+   - Overall aesthetic feeling (cute and cheerful, dark and mysterious, elegant and refined)
 
-**Magical Atmosphere**: What makes this style enchanting? Ethereal glows that make light dance, particle whispers floating through air, or moody atmospheres that wrap around your heart?
+✨ PROMPT WRITING PHILOSOPHY:
+- Write as ONE flowing, conversational description
+- Use vivid, sensory language that paints a picture
+- Be specific but not technical - describe what you SEE
+- Make it feel like excited collaboration between artists
+- Aim for 200-350 words that flow naturally
 
-**Unique Signature**: What single element would you recognize anywhere? That distinctive quirk, motif, or approach that makes this style utterly itself?
+🎨 WHAT MAKES A PERFECT PROMPT:
+- Immediately copy-pasteable into any modern AI image tool
+- Captures the unique "visual fingerprint" of the style
+- Natural enough that AI models intuitively understand
+- Comprehensive enough for accurate replication
 
-🎨 **Writing Philosophy**: Write like a poet who paints with words. Make it flow like a river of visual inspiration. Be specific enough for perfect replication, but natural enough that it feels like describing a dream to a friend. Aim for 200-350 words that sing with visual music.
+Now, synthesize the following style analyses into ONE MASTER PROMPT that perfectly captures this artistic style:
 
-📝 **Perfect Prompt Structure**: Start with the heart of the style, layer in visual details like building a painting, and end with the emotional resonance that makes it unforgettable.
-
-Now, take these artistic descriptions and distill them into visual poetry that any modern AI image model would kill to bring to life:`;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STYLE ANALYSES TO SYNTHESIZE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`;
 
         let individualAnalyses = [];
 
@@ -100,7 +140,7 @@ Now, take these artistic descriptions and distill them into visual poetry that a
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: 'qwen3-vl-235b-a22b-instruct', // 최신 Qwen 비전 모델 사용
+                        model: 'qwen3-vl-235b-a22b-instruct',
                         messages: messages,
                         max_tokens: 32768,
                         temperature: 0.7
@@ -143,7 +183,7 @@ Now, take these artistic descriptions and distill them into visual poetry that a
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'qwen-vl-max-2024-11-28', // 최신 Qwen 비전 모델 사용
+                model: 'qwen3-vl-235b-a22b-instruct',
                 messages: synthesisMessages,
                 max_tokens: 32768,
                 temperature: 0.7
